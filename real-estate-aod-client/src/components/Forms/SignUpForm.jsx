@@ -45,11 +45,20 @@ const SignUpForm = () => {
                   name: username,
                   email: data.email,
                   role: isAgent ? "agent" : "user", // Based on the form selection
-                  ...(isAgent && { rera_number: data.rera_number }), // Add RERA number if Agent
+                  ...(isAgent && { rera_number: data.rera_number, first_time:true,is_verifed:false }), // Add RERA number if Agent
                 };
                 axiosPublic.post("/api/v1/users", userInfo).then((res) => {
                   if (res.data?.insertedId) {
-                    toast.success("Account created successfully!", { id: toastId });
+                    if (isAgent) {
+                      toast.success("You will be able to log in once your profile is approved by the super admin.",{ id: toastId });
+                      navigate(location?.state || "/login");
+                    }else{
+                      toast.success("Account created successfully!", { id: toastId });
+
+                    }
+
+                     // Show message for agents regarding admin approval
+
                     navigate(location?.state || "/");
                   }
                 });

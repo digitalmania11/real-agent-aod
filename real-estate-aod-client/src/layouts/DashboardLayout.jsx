@@ -94,6 +94,18 @@ const DashboardLayout = () => {
       >
         <MdReviews className="inline text-xl mr-3" /> My Reviews
       </NavLink>
+      <NavLink
+        to="/dashboard/meetups"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+        }
+      >
+        <MdReviews className="inline text-xl mr-3" /> My Meetups
+      </NavLink>
     </>
   );
   const agentNavlinks = (
@@ -162,6 +174,19 @@ const DashboardLayout = () => {
         <BsBuildingExclamation className="inline text-xl mr-3" /> Requested
         Properties
       </NavLink>
+      <NavLink
+        to="/dashboard/meetup-scheduled"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+        }
+      >
+        <BsBuildingExclamation className="inline text-xl mr-3" /> Meetup Scheduled
+      </NavLink>
+      
     </>
   );
   const fraudNavlinks = (
