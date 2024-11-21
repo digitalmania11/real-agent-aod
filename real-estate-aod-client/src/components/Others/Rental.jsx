@@ -43,9 +43,9 @@ const Rental = () => {
         <div className="flex flex-col md:flex-row">
        
           <div className="flex-[50%] flex flex-col  justify-center p-10 gap-5 items-start">
-            <p className="text-xl font-semibold">Bring Abuild Homes Estate Wherever You Go</p>
+            <p className="text-xl font-semibold">Bring Real Agent Wherever You Go</p>
             <p>
-            Carry Abuild Homes Estate in the palm of your hand as your trusted companion on your rental journey. <br />
+            Carry Real Agent in the palm of your hand as your trusted companion on your rental journey. <br />
             COMING SOON.......
             </p>
             <div

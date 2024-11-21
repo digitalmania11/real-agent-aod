@@ -28,6 +28,8 @@ import ManageReviews from "../pages/DashboardPages/AdminDashBoard/ManageReviews"
 import UpdatePropertyForm from "../components/Forms/UpdatePropertyForm";
 import Career from "../pages/UserPages/Career";
 import AboutUs from "../pages/UserPages/AboutUs";
+import LearningModules from "../pages/DashboardPages/AgentDashboard/LMS/LearningDashboard";
+import ResultsPage from "../pages/DashboardPages/AgentDashboard/LMS/ResultsPage";
 
 export const router = createBrowserRouter([
   {
@@ -102,6 +104,14 @@ export const router = createBrowserRouter([
       {
         path: 'add-property',
         element: <OnlyAgentRoutes><AddProperty></AddProperty></OnlyAgentRoutes>
+      },
+      {
+        path: 'learning-modules',
+        element: <OnlyAgentRoutes><LearningModules></LearningModules></OnlyAgentRoutes>
+      },
+      {
+        path: 'quiz-results',
+        element: <OnlyAgentRoutes><ResultsPage></ResultsPage></OnlyAgentRoutes>
       },
       {
         path: 'added-properties',

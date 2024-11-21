@@ -165,7 +165,7 @@ const Navbar = () => {
             <div className="flex-1 px-2 mx-2">
               <Link to={"/"}>
                 <img
-                  src="/assets/home/logoMain.png"
+                  src="/assets/home/newonelogo.png"
                   alt="logo"
                   className="w-52"
                 />

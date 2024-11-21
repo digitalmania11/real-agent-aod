@@ -31,14 +31,14 @@ const AboutUs = () => {
             damping: 60,
           }}
         >
-          Welcome to Abuild Homes Estate
+          Welcome to Real Agent
         </motion.h2>
         <motion.p
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 1, type: "spring", stiffness: 260, damping: 60 }}
         >
-          At Abuild Homes Estate, we are dedicated to simplifying and enhancing
+          At Real Agent Estate, we are dedicated to simplifying and enhancing
           your property buying and selling experience. With a passion for real
           estate and a commitment to excellence, we strive to be your trusted
           partner in every step of your property journey.

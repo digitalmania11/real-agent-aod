@@ -15,12 +15,12 @@ const Footer = () => {
         {
           isdark?
           <img src="/assets/home/logoDark.png" alt="darkLogo" className="w-40 rounded-3xl" />:
-          <img src="/assets/home/logoMain.png" alt="logo" className="w-40 rounded-3xl" />
+          <img src="/assets/home/newonelogo.png" alt="logo" className="w-40 rounded-3xl" />
 
         }
        {/* <img className="bg-cover bg-center" src={`${footerbg}`} alt="sa" /> */}
       <p className="max-w-xs">Where your dreams find their address, and every door opens to endless possibilities.</p>
-      <p >Mail: <span className="text-primary">abuild@estate.com</span></p>
+      <p >Mail: <span className="text-primary">realagent@estate.com</span></p>
       <p>Phone: +880 1622 3121</p>
         <div className="grid grid-cols-5 text-xl gap-4 py-4 bg-base-100 rounded-xl">
             <FaFacebook className="hover:scale-150 transition duration-200 cursor-pointer text-blue-500"/>
@@ -62,7 +62,6 @@ const Footer = () => {
       </form>
     
     </div>
-    <p className="text-xs text-slate-400 bg-base-100  w-fit mx-auto col-span-5 text-center p-2 rounded-xl">© 2023 . All rights reserved. By <Link to={"https://github.com/abdnimit1203"}  target="_blank" className="text-primary">ABD NIMIT</Link></p>
     </footer>
   );
 };

@@ -1,18 +1,17 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import HeaderText from "../components/HeaderText/HeaderText";
 import { LiaUsersCogSolid } from "react-icons/lia";
-
 import { FaRegUserCircle, FaUserSecret } from "react-icons/fa";
 import { FaBuildingUser } from "react-icons/fa6";
 import { MdRateReview, MdReviews } from "react-icons/md";
 import { TiThMenuOutline } from "react-icons/ti";
-
 import {
   BsBuildingExclamation,
   BsBuildingFillAdd,
   BsBuildingFillGear,
   BsClipboardHeart,
   BsFillHousesFill,
+  BsBook
 } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { RiAdminFill } from "react-icons/ri";
@@ -25,6 +24,8 @@ import { useEffect, useState } from "react";
 const DashboardLayout = () => {
   const { user, loading } = useAuth();
   const [role, isLoading] = useRole(user?.email);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Sidebar state
+
   let headerText = "";
   let headerText2 = "DASHBOARD";
   if (!isLoading) {
@@ -32,16 +33,19 @@ const DashboardLayout = () => {
       headerText = role.toUpperCase();
     }
   }
-  //setting theme in Dashboard
-   const [isdark, setIsdark] = useState(
+
+  const [isdark, setIsdark] = useState(
     JSON.parse(localStorage.getItem("isdark"))
   );
-  console.log(isdark)
+
+  // Set theme in Dashboard
   useEffect(() => {
     localStorage.setItem("isdark", JSON.stringify(isdark));
-  }, []);
+  }, [isdark]);
 
-
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen); // Toggle sidebar visibility
+  };
 
   const userNavlinks = (
     <>
@@ -109,6 +113,19 @@ const DashboardLayout = () => {
         }
       >
         <FaUserSecret className="inline text-xl mr-3" /> Agent Profile
+      </NavLink>
+      <NavLink
+        to="/dashboard/learning-modules"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+        }
+      >
+        <BsBook className="inline text-xl mr-3" />
+        Learning Modules
       </NavLink>
       <NavLink
         to="/dashboard/add-property"
@@ -237,56 +254,71 @@ const DashboardLayout = () => {
       </NavLink>
     </>
   );
-  return (
-    <div>
+   return (
+    <div className="min-h-screen bg-blue-50 relative">
       {loading ? (
-        <div className="min-h-screen flex justify-center items-center">
+        <div className="flex justify-center items-center min-h-screen bg-blue-100">
           <img
             src="/assets/home/loading2.png"
             alt="loader"
-            className="motion-safe:animate-spin w-52 mx-auto "
+            className="motion-safe:animate-spin w-32 h-32 mx-auto"
           />
         </div>
       ) : (
-        <div className="drawer md:drawer-open">
-          <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+        <div className={`drawer ${sidebarOpen ? "md:drawer-open" : ""}`}>
+          <input
+            id="my-drawer-2"
+            type="checkbox"
+            className="drawer-toggle"
+            checked={sidebarOpen}
+            onChange={toggleSidebar}
+          />
 
-          <div className="drawer-content overflow-x-auto ">
-            {/* Page content here */}
+          <div className="drawer-content overflow-x-auto bg-white transition-all duration-300 ease-in-out">
+            {/* Navbar Button */}
             <label
               htmlFor="my-drawer-2"
-              className="navbar  drawer-button md:hidden font-bold bg-primary pl-6 text-white"
+              onClick={toggleSidebar} // Toggle the sidebar on button click
+              className="navbar drawer-button md:hidden font-semibold bg-indigo-600 text-white px-6 py-2 rounded-md shadow-lg hover:bg-indigo-700"
             >
-              <TiThMenuOutline  className="text-xl mr-2 " />  DASHBOARD
+              <TiThMenuOutline className="text-xl mr-2" /> DASHBOARD
             </label>
 
-            <Outlet></Outlet>
+            <Outlet />
           </div>
 
-          <div className="drawer-side">
+          <div
+            className={`drawer-side bg-gradient-to-tr from-indigo-600 via-blue-500 to-lightblue-300 text-white w-80 min-h-full transition-all duration-300 ease-in-out ${
+              sidebarOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
             <label
               htmlFor="my-drawer-2"
               aria-label="close sidebar"
               className="drawer-overlay"
+              onClick={toggleSidebar} // Close sidebar when overlay is clicked
             ></label>
 
             <div
-              className={
+              className={`menu gap-6 p-4 min-h-full ${
                 role === "admin"
-                  ? `menu gap-6 p-4 w-80 min-h-full bg-gradient-to-tr from-primary to-blue-200 text-black`
-                  : role==="agent"? `menu gap-6 p-4 w-80 min-h-full bg-gradient-to-tr from-blue-400 via-purple-400 to-purple-500 border-r-2 border-[#ffffff56] text-black` :`menu gap-6 p-4 w-80 min-h-full bg-gradient-to-tr from-secondary to-accent text-black`
-              }
+                  ? "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500"
+                  : role === "agent"
+                  ? "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500 border-r-2 border-white"
+                  : "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500"
+              }`}
             >
-              {/* Sidebar content here */}
-
+              {/* Sidebar Content */}
               <HeaderText
                 headerText={headerText}
-                headerText2={headerText2}
+                headerText2="DASHBOARD"
                 emailText={user?.email}
               />
 
               {isLoading ? (
-                <span className="loading loading-ring w-32 mx-auto text-center "></span>
+                <div className="w-full flex justify-center py-8">
+                  <span className="loading loading-ring w-32 h-32 text-center"></span>
+                </div>
               ) : role === "user" ? (
                 userNavlinks
               ) : role === "agent" ? (
@@ -297,16 +329,34 @@ const DashboardLayout = () => {
                 adminNavlinks
               )}
 
-              <hr className="border-white" />
+              <hr className="border-white my-4" />
 
+              {/* Homepage Link */}
               <Link
-                to={"/"}
-                className="hover:bg-white font-bold px-3 py-2 rounded-2xl transition delay-100 ease-in-out"
+                to="/"
+                className="flex items-center hover:bg-blue-300 text-lg font-semibold px-6 py-3 rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-300"
               >
-                <IoIosHome className="inline text-xl  mr-3" />
-                HOMEPAGE{" "}
+                <IoIosHome className="mr-3 text-xl" />
+                HOMEPAGE
               </Link>
-              <LogOutButton/>
+
+              {/* Log Out Button */}
+              <LogOutButton />
+            </div>
+          </div>
+
+          {/* Vertical Arrow Button for Sidebar Toggle */}
+          <div
+            className={`fixed top-1/3 transform -translate-y-1/2 z-50 left-0 ${
+              sidebarOpen ? "rotate-180" : "rotate-0"
+            } transition-transform duration-300`}
+            onClick={toggleSidebar}
+            style={{ cursor: "pointer" }}
+          >
+            <div
+              className={`bg-blue-500 text-white p-2 rounded-full transition-transform duration-300`}
+            >
+              {sidebarOpen ? "<" : ">"}
             </div>
           </div>
         </div>
