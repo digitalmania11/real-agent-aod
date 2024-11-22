@@ -21,7 +21,7 @@ const ContactUs = () => {
                 cursorColor="#3F3D56"
                 multiText={[
                   "We provide a complete service for the sale, purchase or rental of real estate",
-                  "Contact ABuild Homes Estates for Unparalleled Service and Unmatched Expertise.",
+                  "Contact Real Agent for Unparalleled Service and Unmatched Expertise.",
             
                 ]}
                 multiTextDelay={2000}

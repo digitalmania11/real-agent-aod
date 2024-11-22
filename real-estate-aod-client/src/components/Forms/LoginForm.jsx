@@ -76,7 +76,7 @@ if(!user){
             </Link>
 
             {/* <h1 className="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-            Welcome to <br />ABuild Homes Estates
+            Welcome to <br />Real Agent
             </h1> */}
 
             <h1 className="mt-6 text-2xl font-bold   sm:text-3xl md:text-4xl">

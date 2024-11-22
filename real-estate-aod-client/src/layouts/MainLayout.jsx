@@ -10,9 +10,9 @@ const MainLayout = () => {
     //   console.log(loc);
       useEffect(() => {
         if (loc.pathname === "/") {
-          document.title = `ABuild Homes`;
+          document.title = `Real Agent`;
         } else {
-          document.title = `ABuild Homes | ${
+          document.title = `Real Agent | ${
             loc.pathname.replace("/", "").charAt(0).toUpperCase() +
             loc.pathname.slice(2)
           }`;

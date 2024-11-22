@@ -38,10 +38,10 @@ const Career = () => {
           >
             <h1 className="text-5xl font-bold">Job Openings</h1>
             <p className="py-6">
-              Welcome to Abuild Homes Careers,
+              Welcome to Real Agent,
               <br />
               <br />
-              At Abuild Homes Careers, we believe in fostering a culture of
+              At Real Agent Careers, we believe in fostering a culture of
               innovation, creativity, and collaboration. Our team is comprised
               of talented individuals who are passionate about making a
               difference and pushing the boundaries of whats possible. <br />

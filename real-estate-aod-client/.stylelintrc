@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "overrides": [
+    {
+      "files": ["**/*.scss", "**/*.sass", "**/*.css"],
+      "customSyntax": "postcss-scss"
+    }
+  ]
+}
