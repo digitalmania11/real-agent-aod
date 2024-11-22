@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase.config";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 
 export const AuthContext = createContext(null);
@@ -32,6 +33,8 @@ const AuthProvider = ({ children }) => {
 
   //update profile
   const updateUserProfile = (username , url)=>{
+    console.log(url,username);
+    
     return updateProfile(auth.currentUser, {
         displayName: username, photoURL: url
       })
@@ -51,11 +54,16 @@ const AuthProvider = ({ children }) => {
         const userInfo = {email:curretUser.email}
         axiosPublic.post('/jwt',userInfo)
         .then(res=>{
+          
+          // if (!curretUser.is_verified) {
+          //   toast.error("Your profile is awaiting approval by the super admin.");
+          //   // logOut(); // Log out the user if they are not verified
+          // }
           if(res.data.token){
             localStorage.setItem('access-token', res.data.token)
             setLoading(false);
           }
-        })
+        });
       }else{
         // TOdo: Remove token (if token stored in client side: local strorage,caching, in memory)
         localStorage.removeItem('access-token')

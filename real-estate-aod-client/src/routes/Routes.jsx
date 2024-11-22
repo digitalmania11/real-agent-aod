@@ -28,8 +28,11 @@ import ManageReviews from "../pages/DashboardPages/AdminDashBoard/ManageReviews"
 import UpdatePropertyForm from "../components/Forms/UpdatePropertyForm";
 import Career from "../pages/UserPages/Career";
 import AboutUs from "../pages/UserPages/AboutUs";
+
 import LearningModules from "../pages/DashboardPages/AgentDashboard/LMS/LearningDashboard";
 import ResultsPage from "../pages/DashboardPages/AgentDashboard/LMS/ResultsPage";
+
+import MeetingScheduled from "../pages/DashboardPages/AgentDashboard/MeetingScheduled";
 
 export const router = createBrowserRouter([
   {
@@ -91,6 +94,10 @@ export const router = createBrowserRouter([
         element: <OnlyUserRoute><MyReviews></MyReviews></OnlyUserRoute>
       },
       {
+        path: 'meetups',
+        element: <OnlyUserRoute><MeetingScheduled/></OnlyUserRoute>
+      },
+      {
         path: 'make-offer/:id',
         element: <OnlyUserRoute><MakeOffer></MakeOffer></OnlyUserRoute>,
         loader: ({params})=> fetch(`http://localhost:3000/api/v1/wishlists/${params.id}`)
@@ -129,6 +136,10 @@ export const router = createBrowserRouter([
       {
         path: 'requested-properties',
         element: <OnlyAgentRoutes><RequestedProperties></RequestedProperties></OnlyAgentRoutes>
+      },
+      {
+        path: 'meetup-scheduled',
+        element: <OnlyAgentRoutes><MeetingScheduled></MeetingScheduled></OnlyAgentRoutes>
       },
 //admin routes
       {

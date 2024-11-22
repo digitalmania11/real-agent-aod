@@ -12,13 +12,25 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useWishlistByEmail from "../../hooks/useWishlistByEmail";
 import { useEffect, useState } from "react";
+import ScheduleMeetModal from "./ScheduleMeetModal";
+import useRole from "../../hooks/useRole";
+import axios from "axios";
 
 const SinglePropertyCard = () => {
   const { user } = useAuth();
+  const [role, isLoading] = useRole(user?.email);
   const [disableBtn, setDisableBtn] = useState(false);
   const axiosPublic = useAxiosPublic();
   const property = useLoaderData();
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [meeting, setMeeting] = useState(null);
+  const [loading, setLoading] = useState(true);
+// Modal state
+
   //   console.log(property);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const {
     _id,
     propertyImage,
@@ -49,6 +61,27 @@ const SinglePropertyCard = () => {
       }
     }
   }, [_id, wishlistDataByEmail]);
+
+  useEffect(() => {
+    const fetchMeetingStatus = async () => {
+      try {
+        const response = await axiosPublic.get(
+          `/api/v1/meeting-status?propertyId=${_id}&buyerEmail=${user.email}`
+        );
+
+        console.log(response);
+        
+        setMeeting(response.data.data);
+      } catch (error) {
+        console.error("Error fetching meeting status:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMeetingStatus();
+  }, [_id, user.email]);
+
   const reviewData = {
     _id,
     agentName,
@@ -217,8 +250,66 @@ const SinglePropertyCard = () => {
             </p>
           </div>
         </div>
-        <div></div>
+        
+        {/* <div className="mt-6 p-4 bg-white shadow rounded-2xl">
+          <h2 className="text-lg font-bold">Schedule a Meeting</h2>
+          <p className="mt-2 text-sm text-gray-500">
+            Interested in this property? Schedule a meeting with our agent to know more.
+          </p>
+          <button
+            className="btn btn-primary mt-4 w-full"
+            onClick={openModal}
+          >
+            Schedule Meet
+          </button>
+        </div> */}
+
+<div className="mt-6 p-4 bg-white shadow rounded-2xl">
+  <h2 className="text-lg font-bold">Schedule a Meeting</h2>
+  {console.log(role)}
+  {role === "agent" ? (
+    <p className="mt-2 text-sm text-gray-500">
+      You are logged in as an agent. Scheduling is not available.
+    </p>
+  ) : loading ? (
+    <p className="mt-2 text-sm text-gray-500">Loading meeting status...</p>
+  ) : meeting ? (
+    <>
+      <p className="mt-2 text-sm text-gray-500">
+        Meeting Status: <span className="font-bold">{meeting.status}</span>
+      </p>
+      <p className="mt-1 text-sm text-gray-500">
+        Scheduled on: {new Date(meeting.date).toLocaleDateString()} at {meeting.time}
+      </p>
+      <p className="mt-1 text-sm text-gray-500">Location: {meeting.location}</p>
+    </>
+  ) : (
+    <>
+      <p className="mt-2 text-sm text-gray-500">
+        Interested in this property? Schedule a meeting with our agent to know more.
+      </p>
+      <button className="btn btn-primary mt-4 w-full" onClick={openModal}>
+        Schedule Meet
+      </button>
+    </>
+  )}
+</div>
+
+
+        <div>
+
+            {/* Include the modal */}
+      <ScheduleMeetModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        propertyId={_id}
+        propertyTitle={propertyTitle}
+        propertyLocation={propertyLocation}
+      />
+
+        </div>
       </div>
+      
     </div>
   );
 };
