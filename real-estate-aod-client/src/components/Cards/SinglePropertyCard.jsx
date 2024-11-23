@@ -21,7 +21,7 @@ const SinglePropertyCard = () => {
   //   console.log(property);
   const {
     _id,
-    propertyImage,
+    propertyImages,
     propertyLocation,
     priceRange,
     propertyTitle,
@@ -124,8 +124,8 @@ const SinglePropertyCard = () => {
         </div>
         <img
           alt="Home"
-          src={propertyImage}
-          className="w-full max-h-[600px] rounded-md object-cover"
+          src={propertyImages[0]}
+          className="w-full max-h-[400px] rounded-md object-cover"
         />
 
         <div className="mt-2 border-2 rounded-2xl p-4">

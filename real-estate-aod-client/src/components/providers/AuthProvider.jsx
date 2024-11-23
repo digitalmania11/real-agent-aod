@@ -14,6 +14,8 @@ const AuthProvider = ({ children }) => {
 
   const axiosPublic = useAxiosPublic()
 
+  console.log(user);
+
 
   const signupUser = (email,password)=>{
     setLoading(true)
