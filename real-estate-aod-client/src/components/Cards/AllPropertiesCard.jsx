@@ -19,7 +19,7 @@ const AllPropertiesCard = ({ property }) => {
 
   return (
  
-      <motion.article className="flex bg-base-200 hover:shadow-md   rounded-2xl transition delay-150" initial={{
+      <motion.article className="flex bg-base-200 hover:shadow-md   rounded-2xl transition delay-150 " initial={{
         x: 0,
         y: 0,
         scale: 1.2,
@@ -48,11 +48,11 @@ const AllPropertiesCard = ({ property }) => {
           />
         </div>
 
-        <div className="flex flex-1 flex-col justify-between  rounded-r-2xl text-neutral glass  relative w-1/2">
+        <div className="flex flex-1 flex-col justify-between  rounded-r-2xl text-neutral glass  relative">
           <div className="border-s border-gray-900/10 p-4 sm:pr-0 sm:pb-0 sm:border-l-transparent sm:p-6">
             <h3 className="font-bold text-lg lg:text-2xl  ">{propertyTitle}</h3>
 
-            <p className="mt-2 line-clamp-3 md:text-lg text-sm overflow-hidden truncate">
+            <p className="mt-2 line-clamp-3 md:text-lg text-sm">
               <FiMapPin className="inline mr-3" />
               {propertyLocation}
             </p>

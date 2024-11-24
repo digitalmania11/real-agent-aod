@@ -60,17 +60,17 @@ const AddedPropertyCard = ({ property,refetch }) => {
    
   }
   return (
-    <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg max-w-sm mx-auto h-full bg-base-200">
+    <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg max-w-sm xl:max-w-lg mx-auto h-full bg-base-200">
       <img
         alt="property image"
         src={propertyImages[0]}
-        className="aspect-video object-cover"
+        className="aspect-video w-full object-cover"
       />
 
       <div className="  p-4 sm:p-6">
         <h3 className="mt-0.5 text-lg min-h-[60px] ">{propertyTitle}</h3>
         <p className="mt-2 line-clamp-3 text-neutral-400">
-          <FiMapPin className="inline mr-3 text-primary text-sm overflow-hidden truncate" />
+          <FiMapPin className="inline mr-3 text-primary" />
           {propertyLocation}
         </p>
 
