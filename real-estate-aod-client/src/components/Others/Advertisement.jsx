@@ -22,7 +22,7 @@ const Advertisement = () => {
       )}
 
       <Link to={"/all-properties"}>
-        <button className="button button-1 px-6 my-10 rounded-xl">
+        <button className="button button-1 px-6 my-10 rounded-full">
           See All
         </button>
       </Link>

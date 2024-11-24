@@ -47,7 +47,7 @@ const ReviewsSlider = () => {
           disableOnInteraction: false,
         }}
         modules={[Autoplay, FreeMode, Pagination]}
-        className="mySwiper rounded-xl h-full"
+        className="mySwiper rounded-full h-full"
       >
         {reviews?.slice(0, 4).map((review, idx) => (
           <SwiperSlide key={idx}>
@@ -106,7 +106,7 @@ const ReviewsSlider = () => {
                 /> */}
                 <Rating style={{ maxWidth: 150 }} value={4.5} readOnly />
               </div>
-              <footer className="mt-4 font-medium  text-xl sm:mt-6 bg-white p-3 rounded-xl text-slate-700">
+              <footer className="mt-4 font-medium  text-xl sm:mt-6 bg-white p-3 rounded-full text-slate-700">
                 <BsFillBuildingsFill className="inline text-primary text-2xl" />{" "}
                 Property: {review?.propertyTitle}
               </footer>

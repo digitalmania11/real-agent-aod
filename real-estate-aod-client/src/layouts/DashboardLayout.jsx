@@ -58,8 +58,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <FaRegUserCircle className="inline text-xl mr-3" /> My Profile
@@ -70,8 +70,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsClipboardHeart className="inline text-xl mr-3" />
@@ -83,8 +83,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <FaBuildingUser className="inline text-xl mr-3" /> Property Bought
@@ -95,8 +95,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <MdReviews className="inline text-xl mr-3" /> My Reviews
@@ -107,8 +107,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <MdReviews className="inline text-xl mr-3" /> My Meetups
@@ -123,8 +123,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <FaUserSecret className="inline text-xl mr-3" /> Agent Profile
@@ -135,8 +135,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsBook className="inline text-xl mr-3" />
@@ -148,8 +148,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsBuildingFillAdd className="inline text-xl mr-3" />
@@ -161,8 +161,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsFillHousesFill className="inline text-xl mr-3" />
@@ -174,8 +174,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <GrMoney className="inline text-xl mr-3" />
@@ -187,8 +187,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsBuildingExclamation className="inline text-xl mr-3" /> Requested
@@ -200,8 +200,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsBuildingExclamation className="inline text-xl mr-3" /> Meetup Scheduled
@@ -217,8 +217,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <RiAdminFill className="inline text-xl mr-3" /> Profile
@@ -235,8 +235,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <RiAdminFill className="inline text-xl mr-3" /> Admin Profile
@@ -247,8 +247,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <BsBuildingFillGear className="inline text-xl mr-3" />
@@ -260,8 +260,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <LiaUsersCogSolid className="inline text-xl mr-3" />
@@ -273,8 +273,8 @@ const DashboardLayout = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-base-100  px-3 py-2 text-neutral rounded-xl font-semibold"
-            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-xl "
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
         }
       >
         <MdRateReview className="inline text-xl mr-3" />
@@ -317,7 +317,7 @@ const DashboardLayout = () => {
   
           {/* Sidebar content */}
           <div
-            className={`drawer-side bg-gradient-to-tr from-indigo-600 via-blue-500 to-lightblue-300 text-white w-80 min-h-full fixed top-0 left-0 transition-transform duration-300 ease-in-out ${
+            className={`drawer-side bg-gradient-to-tr m-2 rounded-xl from-indigo-600 via-blue-500 to-lightblue-300 text-white w-80 h-[98vh] fixed top-0 left-0 transition-transform duration-300 ease-in-out ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
           >
@@ -329,12 +329,12 @@ const DashboardLayout = () => {
             ></label>
   
             <div
-              className={`menu gap-6 p-4 min-h-full ${
+              className={`menu gap-4 p-4 min-h-[100vh] ${
                 role === "admin"
                   ? "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500"
                   : role === "agent"
                   ? "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500 border-r-2 border-white"
-                  : "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-500"
+                  : "bg-gradient-to-tr from-blue-400 via-blue-400 to-blue-400"
               }`}
             >
               {/* Sidebar Content */}
@@ -346,7 +346,7 @@ const DashboardLayout = () => {
 
   
               {isLoading ? (
-                <div className="w-full flex justify-center py-8">
+                <div className="w-full flex justify-center py-4">
                   <span className="loading loading-ring w-32 h-32 text-center"></span>
                 </div>
               ) : role === "user" ? (
@@ -363,16 +363,18 @@ const DashboardLayout = () => {
               <hr className="border-white my-4" />
   
               {/* Homepage Link */}
+              <div className="flex gap-4 flex-col mt-12  ">
               <Link
                 to="/"
-                className="flex items-center text-lg font-semibold px-6 py-3 rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-300"
+                className="flex items-center text-lg font-semibold px-6 py-3 rounded-full text-white bg-blue-800 hover:bg-blue-900 transition ease-in-out duration-300"
               >
                 <IoIosHome className="mr-3 text-xl" />
-                HOMEPAGE
+                Return Home
               </Link>
   
               {/* Log Out Button */}
               <LogOutButton />
+                </div>
             </div>
           </div>
   
@@ -396,4 +398,4 @@ const DashboardLayout = () => {
   );
 }  
 
-export default DashboardLayout;
+export default DashboardLayout; 

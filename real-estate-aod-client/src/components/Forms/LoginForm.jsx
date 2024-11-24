@@ -70,7 +70,7 @@ if(!user){
         <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6 text-center ">
           <div className="max-w-xl lg:max-w-3xl ">
             <Link to={"/"}>
-              <button className="button button-2 px-5  rounded-xl btn-sm">
+              <button className="button button-2 px-5  rounded-full btn-sm">
                 Go Home
               </button>
             </Link>

@@ -52,8 +52,8 @@ const Navbar = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-primary px-3 py-2 text-base-100 rounded-xl"
-            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-xl"
+            ? " active bg-primary px-3 py-2 text-base-100 rounded-full"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full"
         }
       >
         Home
@@ -65,8 +65,8 @@ const Navbar = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-primary px-3 py-2 text-base-100 rounded-xl"
-            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-xl"
+            ? " active bg-primary px-3 py-2 text-base-100 rounded-full"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full"
         }
       >
         All Properties
@@ -77,8 +77,8 @@ const Navbar = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-primary px-3 py-2 text-base-100 rounded-xl"
-            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-xl flex items-center"
+            ? " active bg-primary px-3 py-2 text-base-100 rounded-full"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full flex items-center"
         }
       >
         {isLoading ? (
@@ -103,8 +103,8 @@ const Navbar = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-primary px-3 py-2 text-base-100 rounded-xl"
-            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-xl"
+            ? " active bg-primary px-3 py-2 text-base-100 rounded-full"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full"
         }
       >
         Career
@@ -115,8 +115,8 @@ const Navbar = () => {
           isPending
             ? "pending"
             : isActive
-            ? " active bg-primary px-3 py-2 text-base-100 rounded-xl"
-            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-xl"
+            ? " active bg-primary px-3 py-2 text-base-100 rounded-full"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full"
         }
       >
         About Us
@@ -240,7 +240,7 @@ const Navbar = () => {
               </div>
             ) : (
               <Link to={"/login"}>
-                <button className="button button-1 px-6 py-2 rounded-xl text-xs hover:border-primary">
+                <button className="button button-1 px-6 py-2 rounded-full text-xs hover:border-primary">
                   LOGIN
                 </button>
               </Link>
@@ -306,7 +306,7 @@ const Navbar = () => {
               <LogOutButton/>
             ) : (
               <Link to={"/login"}>
-                <button className="w-fit btn button button-1 px-6 py-2 rounded-xl hover:text-white btn-ghost">
+                <button className="w-fit btn button button-1 px-6 py-2 rounded-full hover:text-white btn-ghost">
                   LOGIN
                 </button>
               </Link>

@@ -1,181 +1,234 @@
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
-import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
-import { MdVerified } from "react-icons/md";
-import useAuth from "../../../hooks/useAuth";
-import { useForm } from "react-hook-form";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import { FaEdit } from "react-icons/fa";
-import useRole from "../../../hooks/useRole";
-const image_hosting_key = import.meta.env.VITE_IMAGE_API_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+import { MdVerified, MdEdit } from "react-icons/md";
+import { FaEye, FaHeart, FaCalendarAlt, FaDollarSign, FaHome, FaMapMarkerAlt } from "react-icons/fa";
+import UserProfile from './UserProfileMain';
 
+const Dashboard = () => {
+  // Demo data
+  const statistics = [
+    { title: 'Properties Viewed', value: 1234, icon: FaEye },
+    { title: 'Saved Properties', value: 56, icon: FaHeart },
+    { title: 'Scheduled Meetups', value: 12, icon: FaCalendarAlt },
+    { title: 'Offers Made', value: 8, icon: FaDollarSign },
+  ];
 
-const UserProfile = () => {
-  const { user, updateUserProfile } = useAuth()
-  const [role,isLoading] = useRole(user?.email)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const properties = [
+    { id: 1, address: '123 Main St, City, State', price: 350000, status: 'For Sale', views: 45 },
+    { id: 2, address: '456 Elm St, City, State', price: 275000, status: 'Pending', views: 30 },
+    { id: 3, address: '789 Oak St, City, State', price: 400000, status: 'Sold', views: 60 },
+  ];
 
-  const axiosPublic = useAxiosPublic()
-  //toast
+  const meetups = [
+    { id: 1, property: '123 Main St', date: '2023-06-15', time: '10:00 AM' },
+    { id: 2, property: '456 Elm St', date: '2023-06-18', time: '2:00 PM' },
+  ];
 
-  const toastProfileUpdateSuccess = () => toast.success("Profile Updated");
-  const toastProfileUpdateError = (err) => toast.error(`${err.split(":")[1]}`);
+  const activityFeed = [
+    { id: 1, action: 'Viewed property', property: '123 Main St', time: '2 hours ago' },
+    { id: 2, action: 'Scheduled meetup', property: '456 Elm St', time: '1 day ago' },
+    { id: 3, action: 'Made an offer', property: '789 Oak St', time: '3 days ago' },
+  ];
 
-
-
-
-// modal submit
-const { register, handleSubmit, reset } = useForm();
-  const onSubmit =async (data) => {
-   console.log(data)
-   const imageFile = { image: data.image[0] };
-   const res = await axiosPublic.post(image_hosting_api, imageFile, {
-     headers: {
-       "content-type": "multipart/form-data",
-     },
-   });
-   console.log(res.data);
-    updateUserProfile(data.displayName, res.data.data.display_url)
-    .then(() => {
-      toastProfileUpdateSuccess();
-      axiosPublic.patch(`/api/v1/username?email=${user.email}&username=${data.displayName}`)
-      .then(res=>{
-        console.log(res.data)
-      })
-        navigate(location.pathname)
-    })
-    .catch((error) => {
-      console.log(error.message);
-      toastProfileUpdateError(error.message);
-    });
-  
-    document.getElementById("my_modal_3").close();
-    reset();
+  // Demo user data
+  const user = {
+    displayName: "John Doe",
+    email: "john.doe@example.com",
+    photoURL: "https://i.pravatar.cc/300",
+    emailVerified: true,
+    role: "agent"
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'For Sale': return 'bg-green-100 text-green-800';
+      case 'Pending': return 'bg-yellow-100 text-yellow-800';
+      case 'Sold': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-primary to-sky-700 py-20 md:pt-32">
-      <h2 className="text-center font-bold pb-16 text-white text-2xl lg:text-5xl">
-        Welcome to Profile Manager
-      </h2>
-      <div className="text-white  font-semibold flex flex-col justify-center items-center border border-white w-fit mx-auto p-10 rounded-3xl gap-6 py-10">
-        <motion.img
-          initial={{
-            x: 0,
-            y: 0,
-            scale: 1.8,
-            rotate: 0,
-    
-          }}
-          animate={{
-            x: 0,
-            y: 0,
-            scale: 1.0,
-            rotate: 0,
-          }}
-          whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.9 }}
-          src={user?.photoURL}
-          alt=""
-          className="rounded-full max-w-[220px] object-cover aspect-square"
-        />
-        <h3 className="text-xl lg:text-3xl gap-2 items-center">
-          {user?.displayName}
-          {user?.emailVerified ? (
-            <MdVerified className="text-blue-300 inline pl-2 pb-2 text-4xl" />
-          ) : (
-            <p className="text-xs text-center ">(not verified)</p>
-          )}
-        </h3>
-        <div>
-            {
-                isLoading? <span className="loading loading-spinner loading-md"></span>: role !== "user" &&
-                <button className="btn btn-secondary text-white">ROLE : {role.toUpperCase()}</button>
-            }
-        </div>
-        <p className="text-sm lg:text-xl">{user?.email}</p>
-        {/* FOrm */}
-       
-        {/* modal */}
-        <div className="flex gap-6 flex-col md:flex-row">
-   
-        <div className="text-center p-4 font-bold text-xl sm:text-2xl rounded-2xl transition duration-300 ease-in-out hover:scale-110 bg-white flex items-center">
-             <FaEdit className="text-pink-400 inline mr-3 "/>
-              <button
-          className="text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
-          onClick={() => document.getElementById("my_modal_3").showModal()}
-        >
-          EDIT PROFILE
-        </button>
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-sky-100 to-blue-100 p-8 font-sans">
+      {/* <h1 className="text-4xl font-bold text-navy-800 mb-8">Dashboard</h1> */}
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          {/* Statistics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {statistics.map((stat, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4 transform transition-all duration-300 hover:scale-105">
+                <div className="bg-gradient-to-r from-sky-400 to-blue-500 rounded-full p-3">
+                  <stat.icon className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-semibold text-navy-800">{stat.value}</p>
+                  <p className="text-sm text-gray-500">{stat.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Property Tracking */}
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-2xl font-semibold text-navy-800 mb-4">Property Tracking</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-gradient-to-r from-sky-100 to-blue-100">
+                    <th className="p-3 text-sky-800">Address</th>
+                    <th className="p-3 text-sky-800">Price</th>
+                    <th className="p-3 text-sky-800">Status</th>
+                    <th className="p-3 text-sky-800">Views</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {properties.map((property) => (
+                    <tr key={property.id} className="border-b border-sky-100 hover:bg-sky-50 transition-colors duration-150">
+                      <td className="p-3">{property.address}</td>
+                      <td className="p-3">${property.price.toLocaleString()}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(property.status)}`}>
+                          {property.status}
+                        </span>
+                      </td>
+                      <td className="p-3">{property.views}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-        
-        <dialog id="my_modal_3" className="modal">
-          <div className="modal-box text-neutral-800 border-4 border-pink-500 bg-gradient-to-tr via-pink-400 to-white">
-            <form method="dialog">
-            
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            <h3 className="font-bold  pb-4 text-xl">Edit & update your profile<FaEdit className="inline-block text-2xl ml-2"/> </h3>
-           
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="mt-8 grid grid-cols-6 gap-6 text-left justify-center items-center"
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Meetups */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-2xl font-semibold text-navy-800 mb-4">Upcoming Meetups</h2>
+              <ul className="space-y-4">
+                {meetups.map((meetup) => (
+                  <li key={meetup.id} className="flex items-center space-x-4 bg-gradient-to-r from-sky-50 to-white p-4 rounded-lg">
+                    <div className="bg-sky-100 rounded-full p-2">
+                      <FaCalendarAlt className="h-6 w-6 text-sky-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-navy-800">{meetup.property}</p>
+                      <p className="text-sm text-gray-500">{meetup.date} at {meetup.time}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Activity Feed */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-2xl font-semibold text-navy-800 mb-4">Activity Feed</h2>
+              <ul className="space-y-4">
+                {activityFeed.map((activity) => (
+                  <li key={activity.id} className="flex items-center space-x-4 bg-gradient-to-r from-sky-50 to-white p-4 rounded-lg">
+                    <div className="bg-sky-100 rounded-full p-2">
+                      {activity.action === 'Viewed property' && <FaEye className="h-6 w-6 text-sky-600" />}
+                      {activity.action === 'Scheduled meetup' && <FaCalendarAlt className="h-6 w-6 text-sky-600" />}
+                      {activity.action === 'Made an offer' && <FaDollarSign className="h-6 w-6 text-sky-600" />}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-navy-800">{activity.action}</p>
+                      <p className="text-sm text-gray-500">{activity.property} - {activity.time}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* User Profile */}
+        {/* <div className="bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-semibold text-navy-800 mb-4">User Profile</h2>
+          {/* <div className="flex flex-col items-center">
+            <motion.img
+              initial={{ scale: 1.2 }}
+              animate={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              src={user.photoURL}
+              alt=""
+              className="rounded-full w-32 h-32 object-cover mb-4"
+            />
+            <h3 className="text-xl font-semibold text-navy-800 flex items-center gap-2">
+              {user.displayName}
+              {user.emailVerified && <MdVerified className="text-sky-500 text-xl" />}
+            </h3>
+            <span className="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mt-2">
+              {user.role.toUpperCase()}
+            </span>
+            <p className="text-sm text-gray-500 mt-1">{user.email}</p>
+            <button
+              className="mt-4 bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-2 px-4 rounded-full flex items-center gap-2 hover:from-sky-500 hover:to-blue-600 transition-all duration-300"
+              onClick={() => setIsModalOpen(true)}
             >
-              <div className="col-span-6">
-                <label htmlFor="review" className="block text-sm font-medium ">
+              <MdEdit /> Edit Profile
+            </button>
+          </div> */}
+        {/* </div>  */}
+        <UserProfile/>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
+            <h3 className="font-bold text-lg mb-4">Edit Profile</h3>
+            <form className="space-y-4">
+              <div>
+                <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
                   New username
                 </label>
-
                 <input
-                type="displayName"
+                  type="text"
                   id="displayName"
-                  name="displayName"
-                  defaultValue={user?.displayName}
-                  required
-                  {...register("displayName")}
-                  className="mt-1 w-full border-2 rounded-md border-gray-200 focus:outline-2 px-3 bg-slate-100 focus:outline-slate-400 text-sm text-gray-700 py-3   shadow-inner"
+                  defaultValue={user.displayName}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                 />
               </div>
-              <div className="col-span-6 ">
-                <label
-                  htmlFor="image"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+              <div>
+                <label htmlFor="image" className="block text-sm font-medium text-gray-700">
                   Upload Image
                 </label>
-
                 <input
                   type="file"
-                  name="image"
-                  {...register("image", { required: true })}
-                  className="file-input file-input-bordered file-input-secondary w-full max-w-full bg-white"
+                  id="image"
+                  className="mt-1 block w-full text-sm text-gray-500
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-full file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-sky-50 file:text-sky-700
+                  hover:file:bg-sky-100"
                 />
               </div>
-
-              <div className="col-span-6 sm:flex sm:items-center sm:gap-4 mx-auto">
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-full hover:bg-gray-300 transition-all duration-300"
+                >
+                  Cancel
+                </button>
                 <button
                   type="submit"
-                  className="button button-2 btn-secondary hover:text-white p-4"
+                  className="bg-gradient-to-r from-sky-400 to-blue-500 text-white font-bold py-2 px-4 rounded-full hover:from-sky-500 hover:to-blue-600 transition-all duration-300"
                 >
                   Update Profile
                 </button>
               </div>
             </form>
           </div>
-        </dialog>
-      </div>
-        {/* modal */}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default UserProfile;
+export default Dashboard;
+

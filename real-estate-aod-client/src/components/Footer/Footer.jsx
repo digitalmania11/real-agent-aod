@@ -22,7 +22,7 @@ const Footer = () => {
       <p className="max-w-xs">Where your dreams find their address, and every door opens to endless possibilities.</p>
       <p >Mail: <span className="text-primary">realagent@estate.com</span></p>
       <p>Phone: +880 1622 3121</p>
-        <div className="grid grid-cols-5 text-xl gap-4 py-4 bg-base-100 rounded-xl">
+        <div className="grid grid-cols-5 text-xl gap-4 py-4 bg-base-100 rounded-full">
             <FaFacebook className="hover:scale-150 transition duration-200 cursor-pointer text-blue-500"/>
             <FaTwitter className="hover:scale-150 transition duration-200 cursor-pointer text-sky-400"/>
             <FaInstagram className="hover:scale-150 transition duration-200 cursor-pointer text-rose-500"/>

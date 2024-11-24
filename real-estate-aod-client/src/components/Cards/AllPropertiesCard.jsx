@@ -59,7 +59,7 @@ const AllPropertiesCard = ({ property }) => {
             <p className="mt-2 line-clamp-3 md:text-lg text-sm">
               <MdPriceChange className="inline mr-3" />
               Price Range :{" "}
-              <span className=" text-success no-animation bg-white p-1 rounded-xl">
+              <span className=" text-success no-animation bg-white p-1 rounded-full">
                 {priceRange}
               </span>
             </p>
@@ -80,7 +80,7 @@ const AllPropertiesCard = ({ property }) => {
             </div>
             <div className="sm:flex sm:items-end justify-end pt-6 ">
               <Link to={`/properties/${_id}`} className="sm:absolute sm:bottom-0">
-                <button className="btn btn-primary  sm:rounded-ee-2xl text-white rounded-xl">
+                <button className="btn btn-primary  sm:rounded-ee-2xl text-white rounded-full">
                   Details
                 </button>
               </Link>

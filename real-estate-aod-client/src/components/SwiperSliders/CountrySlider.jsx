@@ -29,7 +29,7 @@ const CountrySlider = () => {
           },
         }}
         modules={[Autoplay, FreeMode, Pagination]}
-        className="mySwiper rounded-xl lg:w-[80%]"
+        className="mySwiper rounded-full lg:w-[80%]"
       >
         <SwiperSlide className=" text-white rounded-2xl bg-[#28cf52c4]">
           <img

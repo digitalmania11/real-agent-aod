@@ -70,7 +70,7 @@ export default function ResultsPage() {
         className="space-y-8"
       >
         {/* Header Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+        <div className="bg-white rounded-full shadow-lg p-8 text-center">
           <h1 className="text-3xl font-bold text-indigo-600 mb-4">
             {getMotivationalMessage(quizResults.score, quizResults.totalQuestions)}
           </h1>
@@ -80,7 +80,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Performance Metrics */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-full shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Performance Metrics</h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div>
@@ -101,7 +101,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Category Breakdown */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-full shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Category Breakdown</h2>
           {Object.entries(quizResults.categoryBreakdown).map(([category, { correct, total }]) => (
             <div key={category} className="mb-4">
@@ -118,7 +118,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Score Comparison */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-full shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Score Comparison</h2>
           <div className="flex items-center justify-center space-x-12">
             <div className="text-center">
@@ -133,7 +133,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Detailed Question Review */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white rounded-full shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Detailed Question Review</h2>
           {quizResults.questions.map((question, index) => (
             <motion.div
@@ -168,7 +168,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Encouragement/Call-to-Action Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+        <div className="bg-white rounded-full shadow-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Keep Improving!</h2>
           <p className="text-lg text-gray-700 mb-6">
             Great job on completing the quiz! Remember, consistent practice is the key to mastery. 

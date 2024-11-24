@@ -15,12 +15,12 @@ const MiniCard = ({ property }) => {
   } = property;
   return (
     <div className="h-full max-w-xl mx-auto">
-      <div className="overflow-hidden  shadow flex transition hover:shadow-lg hover:border-primary hover:scale-105  p-6 bg-base-200 border rounded-xl items-start h-full text-neutral glass gap-4">
+      <div className="overflow-hidden  shadow flex transition hover:shadow-lg hover:border-primary hover:scale-105  p-6 bg-base-200 border rounded-full items-start h-full text-neutral glass gap-4">
         <div className="flex-1 h-full">
           <img
             alt="property image"
             src="https://res.cloudinary.com/dxfkcud6l/image/upload/v1732286143/test_jgajfm.jpg"
-            className="rounded-xl h-full object-cover "
+            className="rounded-full h-full object-cover "
           />
         </div>
 

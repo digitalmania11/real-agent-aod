@@ -66,7 +66,7 @@ const AboutUs = () => {
           Why Choose Us?
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-center items-center text-center gap-6 ">
-          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
+          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
             <span className="font-bold text-primary text-xl md:text-3xl pb-6">
               Expertise
             </span>
@@ -76,7 +76,7 @@ const AboutUs = () => {
               with our clients
             </p>
           </motion.div>
-          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
+          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
             <span className="font-bold text-primary text-xl md:text-3xl pb-6">
               Transparency:
             </span>
@@ -86,7 +86,7 @@ const AboutUs = () => {
               complexities of property transactions.
             </p>
           </motion.div>
-          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
+          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
             <span className="font-bold text-primary text-xl md:text-3xl pb-6">
               Customer-Centric Approach:
             </span>
@@ -96,7 +96,7 @@ const AboutUs = () => {
               exceed your expectations.
             </p>
           </motion.div>
-          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
+          <motion.div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full">
             <span className="font-bold text-primary text-xl md:text-3xl pb-6">
               Technology-Driven Solutions:
             </span>
@@ -120,21 +120,21 @@ const AboutUs = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
         >
-          <div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6 ">
+          <div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6 ">
             <span className="border-4 border-primary flex justify-center items-center text-3xl text-white bg-primary aspect-square  rounded-full absolute font-bold w-16 h-16 -top-10 left-[45%] md:left-[36%] lg:left-[40%]">
               <ImPhone />
             </span>
             <p className="text-xl text-neutral">Phone</p>
             <p className="text-xl ">+8801 1234 2113</p>
           </div>
-          <div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6">
+          <div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6">
             <span className="border-4 border-primary flex justify-center items-center text-3xl text-white bg-primary aspect-square  rounded-full absolute font-bold w-16 h-16 -top-10 left-[45%] md:left-[36%] lg:left-[40%]  ">
               <MdEmail />
             </span>
             <p className="text-xl text-neutral">Email</p>
             <p className="text-xl ">real-agent@estate.com</p>
           </div>
-          <div className="flex flex-col p-6 md:p-10 border-4 rounded-xl border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6 ">
+          <div className="flex flex-col p-6 md:p-10 border-4 rounded-full border-b-8 border-y-primary transition duration-150 hover:scale-105 cursor-pointer h-full relative gap-6 ">
             <span className="border-4 border-primary flex justify-center items-center text-3xl text-white bg-primary aspect-square  rounded-full absolute font-bold w-16 h-16 -top-10 left-[45%] md:left-[36%] lg:left-[40%]">
               <GrMapLocation />
             </span>

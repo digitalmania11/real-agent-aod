@@ -14,7 +14,7 @@ const ErrorPage = () => {
                 <Link onClick={() => navigate(-1)} className="btn btn-secondary text-white uppercase">
                 Go back
                 </Link>
-                <Link to={'/'} className="px-4 py-3 button button-2 rounded-xl text-sm">
+                <Link to={'/'} className="px-4 py-3 button button-2 rounded-full text-sm">
                 Return Home
                 </Link>
             </div>
