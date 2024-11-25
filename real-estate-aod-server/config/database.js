@@ -1,11 +1,8 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 
-<<<<<<< HEAD
-const uri = "mongodb+srv://sanjay:<db_password>@cluster0.zysfx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-=======
+
 const uri = "mongodb+srv://sanjay:SG7RdDPE2UOrWmN9@cluster0.zysfx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
->>>>>>> parent of 65055de (Revert "Cards related to the Properties are changed")
 
 const client = new MongoClient(uri, {
   serverApi: {

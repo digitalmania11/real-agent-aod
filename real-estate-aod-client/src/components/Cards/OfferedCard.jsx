@@ -15,6 +15,15 @@ const OfferedCard = ({ property }) => {
     status,
     _id,
   } = property;
+
+
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+        alert("Location copied to clipboard!");
+    });
+    };
+
   return (
     <article className="flex bg-base-200 transition hover:shadow-xl flex-col w-80 mx-auto 2xl:w-96 rounded-2xl h-full">
       <div className={`${status} rounded-t-2xl`}>
@@ -39,10 +48,16 @@ const OfferedCard = ({ property }) => {
             </div>
           )}
           <p>{propertyTitle}</p>
-          <p className="text-left text-sm  line-clamp-3 lg:text-base text-neutral-400">
-            <FiMapPin className="inline mr-3" />
-            {propertyLocation}
-          </p>
+          <div className="mt-2 flex items-center gap-2">
+            <FiMapPin className="text-blue-500" />
+            <button
+              onClick={handleCopy}
+              className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+              title="Copy to clipboard"
+            >
+                Copy Location
+            </button>
+          </div>
           <p className=" text-sm  line-clamp-3 lg:text-base text-neutral">
             <span>Agent name: </span>
             {agentName}

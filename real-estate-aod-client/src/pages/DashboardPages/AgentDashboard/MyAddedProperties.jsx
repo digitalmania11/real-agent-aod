@@ -17,7 +17,14 @@ const MyAddedProperties = () => {
   });
 
   const agentProperties = data?.propertiesData;
+   
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
 
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <HeaderText headerText="My Added Properties" />

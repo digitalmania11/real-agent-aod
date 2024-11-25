@@ -28,8 +28,6 @@ const DashboardLayout = () => {
 
   let headerText = "";
   let headerText2 = "DASHBOARD";
-  console.log("role",role);
-  console.log("user",user);
   if (!isLoading) {
     if (role !== "user") {
       headerText = role.toUpperCase();
@@ -48,7 +46,6 @@ const DashboardLayout = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen); // Toggle sidebar visibility
   };
-  console.log("role",role);
 
   const userNavlinks = (
     <>

@@ -7,7 +7,7 @@ const OurFeatures = () => {
         <img
           src="https://i.ibb.co/1z26NVY/sa.jpg"
           alt="home"
-          className=" h-full object-cover hover:scale-90 transition duration-150 rounded-full"
+          className=" h-full object-cover hover:scale-90 transition duration-150 rounded-md"
         />
       </div>
       <div className="flex-[50%] flex flex-col  justify-center p-10 gap-5 items-start">

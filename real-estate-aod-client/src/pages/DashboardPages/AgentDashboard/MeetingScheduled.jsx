@@ -4,6 +4,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import HeaderText from "../../../components/HeaderText/HeaderText";
 import useRole from "../../../hooks/useRole";
+import { FiMapPin } from "react-icons/fi";
 
 const MeetingScheduled = () => {
   const [meetups, setMeetups] = useState([]);
@@ -90,6 +91,12 @@ const MeetingScheduled = () => {
     }
   };
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
+
 
   return (
     <div className="agent-dashboard p-5">
@@ -112,7 +119,16 @@ const MeetingScheduled = () => {
                   </h3>
                   <p><strong>Date:</strong> {new Date(meetup.date).toLocaleDateString()}</p>
                   <p><strong>Time:</strong> {meetup.time}</p>
-                  <p><strong>Location:</strong> {meetup.location}</p>
+                  <div className="mt-2 flex items-center gap-2">
+                    <FiMapPin className="text-blue-500" />
+                    <button
+                      onClick={handleCopy}
+                      className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+                      title="Copy to clipboard"
+                    >
+                      Copy Location
+                    </button>
+                  </div>
                   
                   <div className="actions mt-4">
                     {meetup.status === "pending" && (

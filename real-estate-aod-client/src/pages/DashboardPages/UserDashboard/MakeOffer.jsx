@@ -35,6 +35,7 @@ const MakeOffer = () => {
   const onSubmit = async (data) => {
     const button = document.getElementById("disable")
     button.disabled =true
+    console.log("offerData",offerData);
     const offeredData = {
         propertyImage:offerData.propertyImage,
       ...data,

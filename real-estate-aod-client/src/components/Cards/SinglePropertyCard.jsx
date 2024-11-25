@@ -116,6 +116,13 @@ const SinglePropertyCard = () => {
       refetch()
     });
   };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 bg-base-200 rounded-2xl lg:max-w-[80%] md:mx-auto p-2 md:p-6">
@@ -170,12 +177,18 @@ const SinglePropertyCard = () => {
               </p>
             </div>
 
-            <div>
-              <p className="mt-2 line-clamp-3 font-semibold text-lg  ">
-                <FiMapPin className="inline mr-3 text-primary" />
-                {propertyLocation}
-              </p>
+            <div className="mt-2 flex items-center gap-2">
+              <FiMapPin className="text-blue-500" />
+              <button
+                onClick={handleCopy}
+                className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+                title="Copy to clipboard"
+              >
+                 Copy Location
+              </button>
             </div>
+
+
             <div>
               <p className="mt-2 line-clamp-3 font-semibold text-lg  ">
                 <RiVerifiedBadgeFill className="inline mr-3 text-primary" />

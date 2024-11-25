@@ -13,7 +13,6 @@ import LogOutButton from "../Buttons/LogOutButton";
 
 const Navbar = () => {
   const { user } = useAuth();
-  console.log("user",user);
   const axiosPublic = useAxiosPublic();
 
   // user role fetching

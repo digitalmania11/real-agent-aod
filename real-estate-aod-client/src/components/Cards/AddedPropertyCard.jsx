@@ -59,6 +59,12 @@ const AddedPropertyCard = ({ property,refetch }) => {
 })
    
   }
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
   return (
     <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg max-w-sm mx-auto h-full bg-base-200">
       <img
@@ -69,10 +75,16 @@ const AddedPropertyCard = ({ property,refetch }) => {
 
       <div className="  p-4 sm:p-6">
         <h3 className="mt-0.5 text-lg min-h-[60px] ">{propertyTitle}</h3>
-        <p className="mt-2 line-clamp-3 text-neutral-400">
-          <FiMapPin className="inline mr-3 text-primary text-sm overflow-hidden truncate" />
-          {propertyLocation}
-        </p>
+        <div className="mt-2 flex items-center gap-2">
+          <FiMapPin className="text-blue-500" />
+          <button
+            onClick={handleCopy}
+            className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+            title="Copy to clipboard"
+          >
+              Copy Location
+          </button>
+        </div>
 
         <p className="mt-2 line-clamp-3 text-sm/relaxed font-semibold">
        Agent Info

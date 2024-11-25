@@ -1,6 +1,8 @@
-import { FiMapPin } from "react-icons/fi";
+
 import { MdPriceChange } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { FiMapPin } from "react-icons/fi";
+import { MdContentCopy } from "react-icons/md";
 
 import PropTypes from "prop-types";
 
@@ -11,16 +13,24 @@ const MiniCard = ({ property }) => {
     status,
     priceRange,
     propertyLocation,
-    propertyImage,
+    propertyImages,
   } = property;
+
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
+
   return (
     <div className="h-full max-w-xl mx-auto">
-      <div className="overflow-hidden  shadow flex transition hover:shadow-lg hover:border-primary hover:scale-105  p-6 bg-base-200 border rounded-full items-start h-full text-neutral glass gap-4">
+      <div className="overflow-hidden  shadow flex transition hover:shadow-lg p-6 hover:border-primary hover:scale-105   bg-base-200 border rounded-xl items-start h-full text-neutral glass gap-4">
         <div className="flex-1 h-full">
           <img
             alt="property image"
-            src="https://res.cloudinary.com/dxfkcud6l/image/upload/v1732286143/test_jgajfm.jpg"
-            className="rounded-full h-full object-cover "
+            src={propertyImages[0]}
+            className="rounded-xl h-full object-cover "
           />
         </div>
 
@@ -28,13 +38,24 @@ const MiniCard = ({ property }) => {
           <div>
             <h3 className="mt-0.5 md:text-xl font-semibold  ">{propertyTitle}</h3>
 
-            <p className="mt-2 line-clamp-3  text-sm/relaxed  ">
+            {/* <p className="mt-2 line-clamp-3  text-sm/relaxed">
               <FiMapPin className="inline mr-3" />
               {propertyLocation}
-            </p>
+            </p> */}
+
+            <div className="mt-2 flex items-center gap-2">
+              <FiMapPin className="text-blue-500" />
+              <button
+                onClick={handleCopy}
+                className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+                title="Copy to clipboard"
+              >
+                 Copy Location
+              </button>
+            </div>
 
             <p className="mt-2 line-clamp-3 text-sm lg:text-base ">
-              <MdPriceChange className="inline mr-3" />
+              <MdPriceChange className="inline mr-3 " />
               {priceRange}
             </p>
           </div>

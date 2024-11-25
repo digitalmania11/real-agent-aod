@@ -17,6 +17,12 @@ const AllPropertiesCard = ({ property }) => {
 
  console.log("propertyImages",propertyImages);
 
+ const handleCopy = () => {
+  navigator.clipboard.writeText(propertyLocation).then(() => {
+    alert("Location copied to clipboard!");
+  });
+};
+
   return (
  
       <motion.article className="flex bg-base-200 hover:shadow-md   rounded-2xl transition delay-150" initial={{
@@ -49,13 +55,22 @@ const AllPropertiesCard = ({ property }) => {
         </div>
 
         <div className="flex flex-1 flex-col justify-between  rounded-r-2xl text-neutral glass  relative w-1/2">
-          <div className="border-s border-gray-900/10 p-4 sm:pr-0 sm:pb-0 sm:border-l-transparent sm:p-6">
+          <div className=" p-4 sm:pr-0 sm:pb-0  sm:p-6">
             <h3 className="font-bold text-lg lg:text-2xl  ">{propertyTitle}</h3>
 
-            <p className="mt-2 line-clamp-3 md:text-lg text-sm overflow-hidden truncate">
-              <FiMapPin className="inline mr-3" />
-              {propertyLocation}
-            </p>
+            <div className="mt-2 flex items-center gap-2">
+              <FiMapPin className="text-blue-500" />
+              <button
+                onClick={handleCopy}
+                className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+                title="Copy to clipboard"
+              >
+                 Copy Location
+              </button>
+            </div>
+
+
+
             <p className="mt-2 line-clamp-3 md:text-lg text-sm">
               <MdPriceChange className="inline mr-3" />
               Price Range :{" "}
@@ -80,7 +95,7 @@ const AllPropertiesCard = ({ property }) => {
             </div>
             <div className="sm:flex sm:items-end justify-end pt-6 ">
               <Link to={`/properties/${_id}`} className="sm:absolute sm:bottom-0">
-                <button className="btn btn-primary  sm:rounded-ee-2xl text-white rounded-full">
+                <button className="btn btn-primary  sm:rounded-2xl text-white rounded-full">
                   Details
                 </button>
               </Link>

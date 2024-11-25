@@ -15,7 +15,9 @@ const PropertyBought = () => {
             return res.data
         }   
     })
-    console.log(data);
+    console.log("data",data);
+
+    
    
     return (
         <div>

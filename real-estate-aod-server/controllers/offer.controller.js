@@ -18,6 +18,7 @@ const getOffers = async (req, res) => {
   }
 
   const result = await offersCollection().find(query).toArray();
+  console.log("result",result);
   res.send(result);
 };
 
@@ -25,6 +26,7 @@ const getOfferById = async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await offersCollection().findOne(query);
+  
   res.send(result);
 };
 

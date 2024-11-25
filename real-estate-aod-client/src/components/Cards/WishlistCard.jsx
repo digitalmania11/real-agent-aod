@@ -12,7 +12,7 @@ const WishlistCard = ({ wishlist,refetch }) => {
   const {
     _id,
     // propertyID,
-    propertyImage,
+    propertyImages,
     propertyLocation,
     priceRange,
     propertyTitle,
@@ -21,6 +21,8 @@ const WishlistCard = ({ wishlist,refetch }) => {
     agentImage,
     status,
   } = wishlist;
+
+  console.log("propertyImages[0]",propertyImages[0])
 
 
   const handleRemove = async()=>{
@@ -51,23 +53,37 @@ const WishlistCard = ({ wishlist,refetch }) => {
        
       }
     });
+
     
    
   }
+
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(propertyLocation).then(() => {
+      alert("Location copied to clipboard!");
+    });
+  };
   return (
     <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg max-w-sm xl:w-lg mx-auto w-full">
       <img
         alt="property image"
-        src={propertyImage}
+        src={propertyImages[0]}
         className="h-56 w-full object-cover"
       />
 
       <div className="bg-white p-4 sm:p-6">
         <h3 className="mt-0.5 text-lg ">{propertyTitle}</h3>
-        <p className="mt-2 line-clamp-3 text-neutral-400">
-          <FiMapPin className="inline mr-3 text-primary" />
-          {propertyLocation}
-        </p>
+        <div className="mt-2 flex items-center gap-2">
+          <FiMapPin className="text-blue-500" />
+          <button
+            onClick={handleCopy}
+            className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
+            title="Copy to clipboard"
+          >
+              Copy Location
+          </button>
+        </div>
 
         <p className="mt-2 line-clamp-3 text-sm/relaxed font-semibold">
        Agent Info
