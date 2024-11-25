@@ -153,7 +153,7 @@ const Navbar = () => {
             <div className="flex-1 px-2 mx-2">
               <Link to={"/"}>
                 <img
-                  src="/assets/home/logoDark.png"
+                  src="/assets/home/newonelogo.png"
                   alt="logo"
                   className="w-52 rounded-3xl"
                 />
@@ -199,7 +199,7 @@ const Navbar = () => {
                 </div>
                 <ul
                  
-                  className="dropdown-content z-[1] menu p-4 py-6 shadow bg-base-100 rounded-box min-w-max border-secondary border-4 space-y-3"
+                  className="dropdown-content z-[1] menu p-4 py-6 shadow bg-base-100 rounded-box min-w-max border-secondary space-y-3"
                 >
                   {isLoading ? (
                     <p>Loading..</p>
@@ -229,7 +229,7 @@ const Navbar = () => {
                   )}
 
                   <p>
-                    <MdMail className="inline text-xl text-secondary" />{" "}
+                    <MdMail className="inline text-xl text-blue-600" />{" "}
                     {user?.email}
                     {/* SambhavSharma@gmail.com */}
                   </p>

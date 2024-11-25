@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import ScheduleMeetModal from "./ScheduleMeetModal";
 import useRole from "../../hooks/useRole";
 import axios from "axios";
+import MapEmbed from "./MapEmbed";
+import { PropertyAdditionalDetails } from "./AdditonalDetails";
 
 const SinglePropertyCard = () => {
   const { user } = useAuth();
@@ -31,6 +33,13 @@ const SinglePropertyCard = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const [showFullDetails, setShowFullDetails] = useState(false);
+
+const toggleDetails = () => {
+  setShowFullDetails(!showFullDetails);
+};
+
   const {
     _id,
     propertyImages,
@@ -45,7 +54,19 @@ const SinglePropertyCard = () => {
     parking,
     rooms,
     size,
+    Youtube, // YouTube link for the property
+    minPrice, // Minimum price of the property
+    maxPrice, // Maximum price of the property
+    price_total_price, // Total price of the property
+    price_registeration_chrages, // Registration charges
+    add_address, // Full property address
+    Landmarks_add, // Nearby landmarks
+    propertyVideoes, // Videos related to the property
+    furnishing, // Furnishing details with value and label
+    ownership, // Ownership details with value and label
+    options, // Flooring or material options
   } = property;
+  
   const location = useLocation();
   //   console.log(location);
   const [wishlistDataByEmail,refetch] = useWishlistByEmail(user.email);
@@ -125,7 +146,7 @@ const SinglePropertyCard = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="md:col-span-2 bg-base-200 rounded-2xl lg:max-w-[80%] md:mx-auto p-2 md:p-6">
+      <div className="md:col-span-2 bg-base-200 rounded-2xl lg:max-w-[100%] md:mx-auto p-2 md:p-6">
         <div className="text-sm breadcrumbs">
           <ul>
             <li>
@@ -177,16 +198,17 @@ const SinglePropertyCard = () => {
               </p>
             </div>
 
-            <div className="mt-2 flex items-center gap-2">
-              <FiMapPin className="text-blue-500" />
-              <button
-                onClick={handleCopy}
-                className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
-                title="Copy to clipboard"
-              >
-                 Copy Location
-              </button>
+            <div>
+              <p className="mt-2 line-clamp-3 font-semibold text-lg  ">
+                <FiMapPin className="inline mr-3 text-primary" />
+                {add_address?.trim().length > 70 
+      ? `${add_address.trim().substring(0, 70)}...` 
+      : add_address?.trim()}
+              </p>
             </div>
+
+
+            
 
 
             <div>
@@ -196,11 +218,32 @@ const SinglePropertyCard = () => {
               </p>
             </div>
           </dl>
+              <PropertyAdditionalDetails
+    minPrice={minPrice}
+    maxPrice={maxPrice}
+    price_total_price={price_total_price}
+    price_registeration_chrages={price_registeration_chrages}
+    add_address={add_address}
+    Landmarks_add={Landmarks_add}
+    propertyVideoes={propertyVideoes}
+    furnishing={furnishing}
+    ownership={ownership}
+    options={options}
+    Youtube={Youtube}
+  />
           <div className="flex flex-col gap-3 my-4">
-            <h2>Details: </h2>
-            <hr />
-            <p className="text-base/relaxed">{propertyDetails}</p>
-          </div>
+    <h2>Details: </h2>
+    <hr />
+    <p className={`text-base/relaxed ${!showFullDetails ? "line-clamp-3" : ""}`}>
+      {propertyDetails}
+    </p>
+    <button
+      onClick={toggleDetails}
+      className="text-blue-500 hover:underline self-start mt-2"
+    >
+      {showFullDetails ? "Read Less" : "Read More"}
+    </button>
+  </div>
           <div className="mt-6 flex items-center gap-8 text-xs">
             <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
               <FaParking className="text-2xl text-primary" />
@@ -233,11 +276,15 @@ const SinglePropertyCard = () => {
             </div>
           </div>
         </div>
+        <div className="mt-2 flex items-center gap-2">
+              
+            <MapEmbed url={propertyLocation}/>
+            </div>
         <div>
           <AddReviews reviewData={reviewData} />
         </div>
       </div>
-      <div className="md:p-6 lg:max-w-[80%]  bg-base-200 rounded-2xl h-fit">
+      <div className="md:p-6 lg:max-w-[90%]  bg-base-200 rounded-2xl h-fit">
         <div className=" ">
           <HeaderText
             headerText="Contact Info"
@@ -246,7 +293,8 @@ const SinglePropertyCard = () => {
         </div>
         <div className="py-3 flex flex-col items-center textcenter">
           <p className="text-xl font-bold">AGENT INFO</p>
-          <div className=" text-center py-6 border-2 rounded-2xl mt-3 border-success w-full mx-auto space-y-3 md:text-lg/relaxed font-semibold bg-gradient-to-tr from-success to-primary text-white ">
+          <div className=" text-center py-6 border-2 border-blue-500 rounded-2xl mt-3 w-full mx-auto space-y-3 md:text-lg/relaxed font-semibold bg-gradient-to-tr from-blue-400 to-blue-600
+ text-white ">
             <img
               src={agentImage}
               alt="agent image"
@@ -294,7 +342,9 @@ const SinglePropertyCard = () => {
       <p className="mt-1 text-sm text-gray-500">
         Scheduled on: {new Date(meeting.date).toLocaleDateString()} at {meeting.time}
       </p>
-      <p className="mt-1 text-sm text-gray-500">Location: {meeting.location}</p>
+      <p className="mt-1 text-sm text-gray-500">Location: {meeting.location?.trim().length > 30 
+      ? `${meeting.location.trim().substring(0, 30)}...` 
+      : meeting.location?.trim()}</p>
     </>
   ) : (
     <>
