@@ -238,9 +238,9 @@ const SignUpForm = () => {
                 </div>
               )}
 
-              <div className="col-span-6 mt-4 flex items-center">
+              {/* <div className="col-span-6 mt-4 flex items-center">
                 <SocialLogin />
-              </div>
+              </div> */}
 
               <div className="col-span-6">
                 <button type="submit" className="btn btn-primary w-full py-4 mt-4">
