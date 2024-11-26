@@ -17,6 +17,8 @@ import useRole from "../../hooks/useRole";
 import axios from "axios";
 import MapEmbed from "./MapEmbed";
 import { PropertyAdditionalDetails } from "./AdditonalDetails";
+import ScheduleMeeting from "./SingleScheduled";
+import ImageSlider from "./ImageSlicer";
 
 const SinglePropertyCard = () => {
   const { user } = useAuth();
@@ -144,6 +146,12 @@ const toggleDetails = () => {
     });
   };
 
+  const propertyImage = [
+    'https://via.placeholder.com/800x400?text=Image+1',
+    'https://via.placeholder.com/800x400?text=Image+2',
+    'https://via.placeholder.com/800x400?text=Image+3',
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="md:col-span-2 bg-base-200 rounded-2xl lg:max-w-[100%] md:mx-auto p-2 md:p-6">
@@ -183,11 +191,13 @@ const toggleDetails = () => {
           
          
         </div>
-        <img
+        {/* <img
           alt="Home"
           src={propertyImages[0]}
           className="w-full max-h-[400px] rounded-md object-cover"
-        />
+        /> */}
+
+        <ImageSlider propertyImages={propertyImages}/>
 
         <div className="mt-2 border-2 rounded-2xl p-4">
           <dl>
@@ -325,50 +335,25 @@ const toggleDetails = () => {
           </button>
         </div> */}
 
-<div className="mt-6 p-4 bg-white shadow rounded-2xl">
-  <h2 className="text-lg font-bold">Schedule a Meeting</h2>
-  {console.log(role)}
-  {role === "agent" ? (
-    <p className="mt-2 text-sm text-gray-500">
-      You are logged in as an agent. Scheduling is not available.
-    </p>
-  ) : loading ? (
-    <p className="mt-2 text-sm text-gray-500">Loading meeting status...</p>
-  ) : meeting ? (
-    <>
-      <p className="mt-2 text-sm text-gray-500">
-        Meeting Status: <span className="font-bold">{meeting.status}</span>
-      </p>
-      <p className="mt-1 text-sm text-gray-500">
-        Scheduled on: {new Date(meeting.date).toLocaleDateString()} at {meeting.time}
-      </p>
-      <p className="mt-1 text-sm text-gray-500">Location: {meeting.location?.trim().length > 30 
-      ? `${meeting.location.trim().substring(0, 30)}...` 
-      : meeting.location?.trim()}</p>
-    </>
-  ) : (
-    <>
-      <p className="mt-2 text-sm text-gray-500">
-        Interested in this property? Schedule a meeting with our agent to know more.
-      </p>
-      <button className="btn btn-primary mt-4 w-full" onClick={openModal}>
-        Schedule Meet
-      </button>
-    </>
-  )}
-</div>
 
+
+<ScheduleMeeting
+        role={role}
+        loading={loading}
+        meeting={meeting}
+        openModal={openModal}
+      />
 
         <div>
 
             {/* Include the modal */}
-      <ScheduleMeetModal
+      {/* <ScheduleMeetModal
         isOpen={isModalOpen}
         onClose={closeModal}
         propertyId={_id}
         propertyTitle={propertyTitle}
         propertyLocation={propertyLocation}
-      />
+      /> */}
 
         </div>
       </div>

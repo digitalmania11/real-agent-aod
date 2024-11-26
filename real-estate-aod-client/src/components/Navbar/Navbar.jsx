@@ -209,7 +209,7 @@ const Navbar = () => {
                         <p className="text-center font-bold">
                           <RiShieldStarFill className="inline text-xl text-secondary" />
                           ROLE :{" "}
-                          <span className="uppercase btn-secondary btn btn-xs text-white">
+                          <span className="uppercase bg-blue-500  btn-secondary btn btn-xs text-white">
                             {data[0]?.role}
                             {/* Agent */}
                           </span>
