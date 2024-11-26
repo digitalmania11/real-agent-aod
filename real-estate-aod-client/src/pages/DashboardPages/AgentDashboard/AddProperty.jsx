@@ -332,7 +332,7 @@ const handleYouTubeBlur = () => {
       formData.append("cloud_name", cloud_name); // Replace with your Cloudinary cloud name
 
       try {
-        const res = await axios.post('http://realagent-aod.api.wemofy.in/api/v1/properties/video', formData, {
+        const res = await axios.post('https://api.wemofy.in/api/v1/properties/video', formData, {
           onUploadProgress: (progressEvent) => {
             const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setUploadProgress(percentage); // Update upload progress
@@ -421,7 +421,7 @@ const handleYouTubeBlur = () => {
       };
       console.log("PROPERTYDATA", propertyData);
   
-      const res = await fetch('http://realagent-aod.api.wemofy.in/api/v1/properties', {
+      const res = await fetch('https://api.wemofy.in/api/v1/properties', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

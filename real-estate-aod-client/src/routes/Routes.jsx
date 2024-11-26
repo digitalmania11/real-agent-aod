@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
       {
         path: "/properties/:id",
         element:<PrivateRoute><PropertyDetails/></PrivateRoute> ,
-        loader: ({params})=> fetch(`http://realagent-aod.api.wemofy.in/api/v1/properties/${params.id}`)
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
       },
       {
         path: "/career",
@@ -100,12 +100,12 @@ export const router = createBrowserRouter([
       {
         path: 'make-offer/:id',
         element: <OnlyUserRoute><MakeOffer></MakeOffer></OnlyUserRoute>,
-        loader: ({params})=> fetch(`http://realagent-aod.api.wemofy.in/api/v1/wishlists/${params.id}`)
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/wishlists/${params.id}`)
       },
       {
         path: 'payment/:id',
         element: <OnlyUserRoute><Payment></Payment></OnlyUserRoute>,
-        loader: ({params})=> fetch(`http://realagent-aod.api.wemofy.in/api/v1/offers/${params.id}`)
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/offers/${params.id}`)
       },
 // agent routes
       {
@@ -127,7 +127,7 @@ export const router = createBrowserRouter([
       {
         path: 'update-property/:id',
         element: <OnlyAgentRoutes><UpdatePropertyForm/></OnlyAgentRoutes>,
-        loader: ({params})=> fetch(`http://realagent-aod.api.wemofy.in/api/v1/properties/${params.id}`)
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
       },
       {
         path: 'sold-properties',
