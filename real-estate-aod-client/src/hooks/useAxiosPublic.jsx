@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosPublic = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://realagent-aod.api.wemofy.in",
 })
 const useAxiosPublic = () => {
   return axiosPublic
