@@ -17,9 +17,7 @@ const Home = () => {
       <div>
         <Banner />
       </div>
-      <div>
-        <AvailableCountries />
-      </div>
+     
       <div>
         <Advertisement />
       </div>

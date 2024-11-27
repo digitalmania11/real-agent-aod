@@ -107,7 +107,7 @@ const AddReviews = ({ reviewData }) => {
         <div className="grid grid-cols-1 gap-6">
           {reviewDataByID?.map((review) => (
             
-              <div className="border-warning rounded-full  border-2 p-4" key={review._id}>
+              <div className="border-warning rounded-full p-4" key={review._id}>
                 <FaQuoteLeft className="text-neutral mb-2" />
                 <p className="textarea-md text-base">{review.reviewDescription}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2">

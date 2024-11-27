@@ -35,7 +35,7 @@ const Banner = () => {
               "Easy way to find a perfect property",
             ]}
             multiTextDelay={1000}
-            typeSpeed={30}
+            typeSpeed={200}
           />
         </h2>
         <h2 className="mb-5 text-4xl leading-normal font-bold">
@@ -60,13 +60,13 @@ const Banner = () => {
             className="mt-1.5 w-full rounded-lg border-gray-300 bg-transparent text-gray-700 sm:text-sm pr-6 focus:outline-none"
           >
             <option value="">Select your city</option>
-            <option value="dhk">Dhaka, BD</option>
-            <option value="gpr">Gazipur, BD</option>
-            <option value="utr">Uttara, BD</option>
-            <option value="nw">New York, USA</option>
-            <option value="wt">Washington, USA</option>
-            <option value="prs">Paris, FR</option>
-            <option value="prg">Prague, CZK</option>
+            <option value="dhk">Aurangabad</option>
+            <option value="gpr">Agra</option>
+            <option value="utr">Hyderabad</option>
+            <option value="nw">Bengaluru</option>
+            <option value="wt">Chennai</option>
+            <option value="prs">Pune</option>
+            <option value="prg">Mumbai</option>
           </select>
         </div>
         <div>

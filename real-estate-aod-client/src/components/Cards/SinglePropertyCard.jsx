@@ -347,13 +347,13 @@ const toggleDetails = () => {
         <div>
 
             {/* Include the modal */}
-      {/* <ScheduleMeetModal
+       <ScheduleMeetModal
         isOpen={isModalOpen}
         onClose={closeModal}
         propertyId={_id}
         propertyTitle={propertyTitle}
         propertyLocation={propertyLocation}
-      /> */}
+      /> 
 
         </div>
       </div>

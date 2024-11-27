@@ -10,6 +10,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { setTheme } from "../../..";
 import LogOutButton from "../Buttons/LogOutButton";
+import { CityDropdown } from "./DropDown";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -45,6 +46,19 @@ const Navbar = () => {
 
   const navlinks = (
     <>
+        <NavLink
+        to="/"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? " active"
+            : "hover:bg-primary px-3 py-2 hover:text-base-100 transition duration-200 rounded-full"
+        }
+      >
+        <CityDropdown />
+      </NavLink>
+
       <NavLink
         to="/"
         className={({ isActive, isPending }) =>
@@ -244,7 +258,7 @@ const Navbar = () => {
                 </button>
               </Link>
             )}
-            <div className="ml-2">
+            {/* <div className="ml-2">
               <label className="cursor-pointer grid place-items-center">
                 <input
                   type="checkbox"
@@ -286,7 +300,7 @@ const Navbar = () => {
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
               </label>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* Page content here */}
