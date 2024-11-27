@@ -3,6 +3,7 @@ import { FaDollarSign, FaMapMarkerAlt, FaLandmark, FaCouch, FaKey, FaYoutube } f
 import { BsCurrencyDollar, BsHouseDoor } from 'react-icons/bs';
 import { MdVideoLibrary } from 'react-icons/md';
 import { IoMdOptions } from 'react-icons/io';
+import { VideoThumbnail } from './YoutubeThumbnail';
 
 export const PropertyAdditionalDetails = ({
   minPrice,
@@ -74,14 +75,10 @@ export const PropertyAdditionalDetails = ({
           </div>
           <dd>
             {Youtube ? (
-              <a
-                href={Youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-700 transition-colors duration-200 flex items-center"
-              >
-                Watch on YouTube
-              </a>
+             <VideoThumbnail
+             youtubeLink={Youtube}
+             title="Luxurious Beachfront Villa Tour"
+           />
             ) : (
               <p className="text-gray-600">No YouTube link available</p>
             )}

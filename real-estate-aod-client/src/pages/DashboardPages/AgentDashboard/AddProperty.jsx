@@ -860,7 +860,7 @@ const handleYouTubeBlur = () => {
                   }`}
                 >
                   <FaMapMarkerAlt className="inline text-xl mr-2 text-blue-500" />
-                  Property Location
+                  Map Embed Location
                 </label>
 
                 <div className="relative">

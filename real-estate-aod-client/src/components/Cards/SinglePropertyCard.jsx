@@ -321,19 +321,7 @@ const toggleDetails = () => {
             </p>
           </div>
         </div>
-        
-        {/* <div className="mt-6 p-4 bg-white shadow rounded-2xl">
-          <h2 className="text-lg font-bold">Schedule a Meeting</h2>
-          <p className="mt-2 text-sm text-gray-500">
-            Interested in this property? Schedule a meeting with our agent to know more.
-          </p>
-          <button
-            className="btn btn-primary mt-4 w-full"
-            onClick={openModal}
-          >
-            Schedule Meet
-          </button>
-        </div> */}
+    
 
 
 
