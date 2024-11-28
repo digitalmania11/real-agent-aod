@@ -25,7 +25,7 @@ const PrivateRoute = ({ children }) => {
         icon: "warning",
         color: "white",
         text: "You have to log in first",
-        showConfirmButton: false,
+        showConfirmButton: true,
         timer: 3000,
         background: "#3bb1ff",
       });

@@ -251,7 +251,7 @@ const DashboardLayout = () => {
         <BsBuildingFillGear className="inline text-xl mr-3" />
         Manage Properties
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/dashboard/manage-users"
         className={({ isActive, isPending }) =>
           isPending
@@ -263,7 +263,7 @@ const DashboardLayout = () => {
       >
         <LiaUsersCogSolid className="inline text-xl mr-3" />
         Manage Users
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to="/dashboard/manage-reviews"
         className={({ isActive, isPending }) =>

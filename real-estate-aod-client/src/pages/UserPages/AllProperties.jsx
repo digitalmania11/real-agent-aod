@@ -3,10 +3,12 @@ import AllPropertiesCard from "../../components/Cards/AllPropertiesCard";
 import useProperties from "../../hooks/useProperties";
 import HeaderText from "./../../components/HeaderText/HeaderText";
 import { TbHomeSearch } from "react-icons/tb";
+import useAuth from "../../hooks/useAuth";
 
 const AllProperties = () => {
   const [search, setSearch] = useState("");
   console.log(search);
+  const {user} = useAuth();
   const [sort, setSort] = useState('')
   const [asc, setAsc] = useState(false)
   const [desc, setDesc] = useState(false)

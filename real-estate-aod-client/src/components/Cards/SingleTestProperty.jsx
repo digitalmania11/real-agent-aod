@@ -68,12 +68,11 @@ const toggleDetails = () => {
     ownership, // Ownership details with value and label
     options, // Flooring or material options
   } = property;
-
-  console.log(propertyLocation)
   
   const location = useLocation();
   //   console.log(location);
-  const [wishlistDataByEmail,refetch] = useWishlistByEmail(user.email);
+  const [wishlistDataByEmail,refetch] = [];
+  if(user != null) refetch(useWishlistByEmail(user.email));
 
   useEffect(() => {
     if (wishlistDataByEmail) {
@@ -175,24 +174,7 @@ const toggleDetails = () => {
         </div>
         <div className="flex items-center  justify-between gap-4 py-4 ">
           <h3 className="text-2xl/relaxed font-bold">{propertyTitle}</h3>
-          {
-            disableBtn?<button
-            onClick={handleAddtoWishlist}
-            className="btn btn-sm text-white btn-disabled"
-          >
-            <BsBookmarkHeartFill className="text-2xl" />
-            Already Added
-           
-          </button> :<button
-            onClick={handleAddtoWishlist}
-            className="btn btn-sm bg-pink-600 text-white hover:bg-pink-800 "
-          >
-            <BsBookmarkHeart className="text-2xl" />
-            Add to wishlist
-           
-          </button>
-
-          }
+          
           
          
         </div>
@@ -291,10 +273,6 @@ const toggleDetails = () => {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex items-center gap-2">
-              
-            <MapEmbed url={propertyLocation}/>
-            </div>
         <div>
           <AddReviews reviewData={reviewData} />
         </div>
@@ -325,29 +303,10 @@ const toggleDetails = () => {
               Contact Info: <span className="font-normal"> 017XXXXXXXX</span>{" "}
             </p>
           </div>
-        </div>
-    
-
-
-
-<ScheduleMeeting
+          <ScheduleMeeting
         role={role}
-        loading={loading}
         meeting={meeting}
-        openModal={openModal}
       />
-
-        <div>
-
-            {/* Include the modal */}
-       <ScheduleMeetModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        propertyId={_id}
-        propertyTitle={propertyTitle}
-        propertyLocation={propertyLocation}
-      /> 
-
         </div>
       </div>
       

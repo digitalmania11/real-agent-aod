@@ -42,9 +42,9 @@ const AddReviews = ({ reviewData }) => {
     <div className="p-4 border-2 rounded-2xl my-4 space-y-3">
       <h2 className="text-xl font-bold">Reviews</h2>
       <hr />
-      {
-        user != null ?
       <div className="flex gap-6 flex-col md:flex-row">
+        {user != null ? 
+        <div>
         <p>You can view and also add review for this property here</p>
       
         <button
@@ -53,6 +53,11 @@ const AddReviews = ({ reviewData }) => {
         >
           Add a review
         </button>
+        </div>
+        :  
+        <div></div>
+        }
+        
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box bg-warning text-neutral-800">
             <form method="dialog">
@@ -104,15 +109,12 @@ const AddReviews = ({ reviewData }) => {
           </div>
         </dialog>
       </div>
-      :
-      <div></div>
-         }
       <div>
         <hr />
         <div className="grid grid-cols-1 gap-6">
           {reviewDataByID?.map((review) => (
             
-              <div className="border-warning rounded-full  border-2 p-4" key={review._id}>
+              <div className="border-warning rounded-full p-4" key={review._id}>
                 <FaQuoteLeft className="text-neutral mb-2" />
                 <p className="textarea-md text-base">{review.reviewDescription}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2">
