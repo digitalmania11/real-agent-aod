@@ -42,6 +42,8 @@ const AddReviews = ({ reviewData }) => {
     <div className="p-4 border-2 rounded-2xl my-4 space-y-3">
       <h2 className="text-xl font-bold">Reviews</h2>
       <hr />
+      {
+        user != null ?
       <div className="flex gap-6 flex-col md:flex-row">
         <p>You can view and also add review for this property here</p>
       
@@ -102,6 +104,9 @@ const AddReviews = ({ reviewData }) => {
           </div>
         </dialog>
       </div>
+      :
+      <div></div>
+         }
       <div>
         <hr />
         <div className="grid grid-cols-1 gap-6">

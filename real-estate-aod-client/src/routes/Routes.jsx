@@ -46,11 +46,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-properties",
-        element:<PrivateRoute><AllProperties /></PrivateRoute> ,
+        element:<AllProperties /> ,
       },
       {
         path: "/properties/:id",
-        element:<PrivateRoute><PropertyDetails/></PrivateRoute> ,
+        element:<PropertyDetails/> ,
         loader: ({params})=> fetch(`http://localhost:3000/api/v1/properties/${params.id}`)
       },
       {

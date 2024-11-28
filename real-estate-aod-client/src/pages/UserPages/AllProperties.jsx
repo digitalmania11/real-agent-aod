@@ -62,18 +62,6 @@ const AllProperties = () => {
             </span>
           </div>
           <div>
-            {/* <label className="form-control w-full max-w-xs">
-  <div className="label">
-    <span className="label-text">Sort by</span>
-    <span className="label-text-alt">Price</span>
-  </div>
-  <select className="select select-bordered bg-base-200">
-  <option value="Dafault">Default</option>
-    <option value="asc" onSelect={handleSortMin}>min - high</option>
-    <option value="desc" onSelect={handleSortHigh}>high - min</option>
-  </select>
-  
-</label> */}
             <p>Sort by : Price</p>
             <button className={asc? "btn btn-sm btn-primary" : "btn btn-sm"} onClick={handleSortMin}>
               min to high

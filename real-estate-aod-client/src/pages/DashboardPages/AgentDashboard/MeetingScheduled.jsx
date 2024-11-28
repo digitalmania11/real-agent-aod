@@ -14,6 +14,7 @@ const MeetingScheduled = () => {
   const [selectedMeetup, setSelectedMeetup] = useState(null);
   const [buyerFeedback, setBuyerFeedback] = useState("");
   const [agentFeedback, setAgentFeedback] = useState("");
+  const [isCopied, setIsCopied] = useState(false)
 
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
@@ -91,11 +92,15 @@ const MeetingScheduled = () => {
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(propertyLocation).then(() => {
-      alert("Location copied to clipboard!");
-    });
-  };
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(location)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy: ', err)
+    }
+  }
 
 
   return (
@@ -119,17 +124,33 @@ const MeetingScheduled = () => {
                   </h3>
                   <p><strong>Date:</strong> {new Date(meetup.date).toLocaleDateString()}</p>
                   <p><strong>Time:</strong> {meetup.time}</p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <FiMapPin className="text-blue-500" />
+                  <div className="flex items-center gap-2">
+                    <MapPinIcon className="text-blue-500 h-5 w-5" />
                     <button
                       onClick={handleCopy}
-                      className="text-black text-xs  focus:outline-none ring-2 ring-blue-400 rounded-full p-2 transition"
-                      title="Copy to clipboard"
+                      className={`
+                        flex items-center gap-2 px-3 py-2 text-sm font-medium
+                        rounded-md transition-all duration-200 ease-in-out
+                        ${isCopied 
+                          ? 'bg-blue-100 text-blue-700 hover:bg-blue-200' 
+                          : 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-300'
+                        }
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+                      `}
                     >
-                      Copy Location
+                      {isCopied ? (
+                        <>
+                          <CheckIcon className="h-4 w-4" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <ClipboardIcon className="h-4 w-4" />
+                          <span>Copy Location</span>
+                        </>
+                      )}
                     </button>
                   </div>
-                  
                   <div className="actions mt-4">
                     {meetup.status === "pending" && (
                       <div className="flex space-x-3">
