@@ -229,6 +229,63 @@ This API allows management of user data in a MongoDB database. It includes funct
 
 ---
 
+### API Documentation: Login Functionality
+
+---
+
+### **Endpoint URL**
+```
+POST /login
+```
+
+### **Description**
+This endpoint authenticates a user by validating their email and password, then generates a JWT token for session management.
+
+---
+
+### **Request Body**
+| Field Name | Type   | Required | Description               |
+|------------|--------|----------|---------------------------|
+| email      | string | Yes      | The user's email address. |
+| password   | string | Yes      | The user's password.      |
+
+#### **Example Request Body**
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+---
+
+### **Response**
+
+#### **Success Response**
+- **Status Code:** `200 OK`
+- **Body:**
+  ```json
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR..."
+  }
+  ```
+  - **Description:** Returns a JWT token for use in subsequent authenticated requests.
+
+#### **Error Responses**
+| Status Code | Description                          | Example Body                          |
+|-------------|--------------------------------------|---------------------------------------|
+| `400`       | Missing or invalid input fields.     | `{ "error": "Email and password are required." }` |
+| `401`       | Authentication failed.               | `{ "error": "Invalid email or password." }` |
+| `500`       | Internal server error.               | `{ "error": "An error occurred." }`   |
+
+---
+
+### **Error Handling for Login Functionality**
+1. **Invalid Input:** Return `400 Bad Request` for missing or malformed email/password.
+2. **Authentication Failure:** Return `401 Unauthorized` for incorrect credentials.
+3. **Server Errors:** Handle unexpected issues with `500 Internal Server Error`.
+
+
 # API documentation for **Review Controller**:
 
 

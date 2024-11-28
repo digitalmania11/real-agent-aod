@@ -8,6 +8,7 @@ import Login from "../pages/UserPages/Login";
 import SignUp from "../pages/UserPages/SignUp";
 import PrivateRoute from './PrivateRoute';
 import PropertyDetails from "../pages/UserPages/PropertyDetails";
+import SingleTestProperty from "../components/Cards/SingleTestProperty"
 import UserHome from "../pages/DashboardPages/UserDashboard/UserHome";
 import OnlyUserRoute from "./OnlyUserRoute";
 import OnlyAgentRoutes from "./OnlyAgentRoutes";
@@ -46,11 +47,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-properties",
-        element:<PrivateRoute><AllProperties /></PrivateRoute> ,
+        element:<AllProperties /> ,
       },
       {
         path: "/properties/:id",
         element:<PrivateRoute><PropertyDetails/></PrivateRoute> ,
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
+      },
+      {
+        path: "/properties/test/:id",
+        element:<SingleTestProperty/>,
         loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
       },
       {

@@ -43,6 +43,8 @@ const AddReviews = ({ reviewData }) => {
       <h2 className="text-xl font-bold">Reviews</h2>
       <hr />
       <div className="flex gap-6 flex-col md:flex-row">
+        {user != null ? 
+        <div>
         <p>You can view and also add review for this property here</p>
       
         <button
@@ -51,6 +53,11 @@ const AddReviews = ({ reviewData }) => {
         >
           Add a review
         </button>
+        </div>
+        :  
+        <div></div>
+        }
+        
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box bg-warning text-neutral-800">
             <form method="dialog">
