@@ -51,7 +51,7 @@ const Banner = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 glass bg-gray-200 gap-6 p-4 rounded-full items-center justify-around text-gray-700">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 glass bg-gray-200 gap-6 p-4 rounded-xl sm:rounded-full  items-center justify-around text-gray-700">
         <div className="">
           <h3 className="font-semibold">Location</h3>
           <select
