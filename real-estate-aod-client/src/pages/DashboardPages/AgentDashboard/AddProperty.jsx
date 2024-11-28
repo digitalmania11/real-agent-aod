@@ -332,7 +332,7 @@ const handleYouTubeBlur = () => {
       formData.append("cloud_name", cloud_name); // Replace with your Cloudinary cloud name
 
       try {
-        const res = await axios.post('http://localhost:3000/api/v1/properties/video', formData, {
+        const res = await axios.post('https://api.wemofy.in/api/v1/properties/video', formData, {
           onUploadProgress: (progressEvent) => {
             const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setUploadProgress(percentage); // Update upload progress
@@ -421,7 +421,7 @@ const handleYouTubeBlur = () => {
       };
       console.log("PROPERTYDATA", propertyData);
   
-      const res = await fetch('http://localhost:3000/api/v1/properties', {
+      const res = await fetch('https://api.wemofy.in/api/v1/properties', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -860,7 +860,7 @@ const handleYouTubeBlur = () => {
                   }`}
                 >
                   <FaMapMarkerAlt className="inline text-xl mr-2 text-blue-500" />
-                  Property Location
+                  Map Embed Location
                 </label>
 
                 <div className="relative">

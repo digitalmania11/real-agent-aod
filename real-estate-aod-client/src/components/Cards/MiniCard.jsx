@@ -14,6 +14,7 @@ const MiniCard = ({ property }) => {
     priceRange,
     propertyLocation,
     propertyImages,
+    add_address
   } = property;
 
 
@@ -38,12 +39,16 @@ const MiniCard = ({ property }) => {
           <div>
             <h3 className="mt-0.5 md:text-xl font-semibold  ">{propertyTitle}</h3>
 
-            {/* <p className="mt-2 line-clamp-3  text-sm/relaxed">
-              <FiMapPin className="inline mr-3" />
-              {propertyLocation}
-            </p> */}
+            <div>
+              <p className="mt-2 line-clamp-3 font-semibold text-lg  ">
+                <FiMapPin className="inline mr-3 text-primary" />
+                {add_address?.trim().length > 30 
+      ? `${add_address.trim().substring(0, 40)}...` 
+      : add_address?.trim()}
+              </p>
+            </div>
 
-            <div className="mt-2 flex items-center gap-2">
+            {/* <div className="mt-2 flex items-center gap-2">
               <FiMapPin className="text-blue-500" />
               <button
                 onClick={handleCopy}
@@ -52,7 +57,7 @@ const MiniCard = ({ property }) => {
               >
                  Copy Location
               </button>
-            </div>
+            </div> */}
 
             <p className="mt-2 line-clamp-3 text-sm lg:text-base ">
               <MdPriceChange className="inline mr-3 " />

@@ -165,7 +165,7 @@ if(!user){
             </span>
             <div className="mx-auto w-fit">
 
-            <SocialLogin/>
+            {/* <SocialLogin/> */}
             </div>
           </div>
         </main>

@@ -136,7 +136,9 @@ const ManageProperties = () => {
                     {property.propertyTitle}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 ">
-                    {property.propertyLocation}
+                  {property.add_address?.trim().length > 40 
+      ? `${property.add_address.trim().substring(0, 40)}...` 
+      : property.add_address?.trim()}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 ">
                     {property.agentName}
