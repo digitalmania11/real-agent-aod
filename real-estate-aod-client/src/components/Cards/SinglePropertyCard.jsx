@@ -68,6 +68,8 @@ const toggleDetails = () => {
     ownership, // Ownership details with value and label
     options, // Flooring or material options
   } = property;
+
+  console.log(propertyLocation)
   
   const location = useLocation();
   //   console.log(location);
@@ -86,6 +88,9 @@ const toggleDetails = () => {
   }, [_id, wishlistDataByEmail]);
 
   useEffect(() => {
+
+    if(user == null) return;
+
     const fetchMeetingStatus = async () => {
       try {
         const response = await axiosPublic.get(
@@ -103,7 +108,7 @@ const toggleDetails = () => {
     };
 
     fetchMeetingStatus();
-  }, [_id, user.email]);
+  }, [_id]);
 
   const reviewData = {
     _id,

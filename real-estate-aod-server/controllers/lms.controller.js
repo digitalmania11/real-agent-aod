@@ -27,6 +27,7 @@ exports.getTrainingMaterials = async (req, res) => {
 exports.addTrainingMaterial = async (req, res) => {
     try {
       const result = await trainingMaterialsCollection().insertOne(req.body);
+      console.log(result);
       res.status(201).json({ success: true, material: result.ops[0] });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
@@ -58,6 +59,33 @@ exports.getQuizzes = async (req, res) => {
 //     ],
 //     "passingScore": 7
 //   }
+
+exports.PdfUpload = async (req, res) => {
+  try {
+    if (req.files && req.files.PdfDocument) {
+      const pdfFilePath = req.files.PdfDocument[0].path;
+
+      console.log(pdfFilePath);
+
+      const pdfUploadResponse = await uploadCloudinary(pdfFilePath);
+
+      console.log("pdfUploadResponse", pdfUploadResponse);
+
+      if (pdfUploadResponse || pdfUploadResponse.secure_url) {
+        res.status(200).json({ pdfUrl: pdfUploadResponse.secure_url });
+      } else {
+        res.status(500).json({ error: "Failed to retrieve PDF URL from Cloudinary." });
+      }
+    } else {
+      return res.status(400).json({ error: "No PDF file provided." });
+    }
+  } catch (error) {
+    console.error("Error uploading PDF to Cloudinary:", error);
+    res.status(500).json({ error: "Failed to upload PDF." });
+  }
+};
+
+
 exports.addQuiz = async (req, res) => {
     try {
       const result = await quizzesCollection().insertOne(req.body);
@@ -88,7 +116,6 @@ exports.submitQuiz = async (req, res) => {
   
       const passingScore = quiz.passingScore || Math.ceil(quiz.questions.length * 0.7);
   
-      // Update agent's progress
       const updateResult = await usersCollection().updateOne(
         { _id: agentId },
         {

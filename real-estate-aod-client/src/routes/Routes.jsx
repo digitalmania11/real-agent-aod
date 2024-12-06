@@ -8,6 +8,7 @@ import Login from "../pages/UserPages/Login";
 import SignUp from "../pages/UserPages/SignUp";
 import PrivateRoute from './PrivateRoute';
 import PropertyDetails from "../pages/UserPages/PropertyDetails";
+import SingleTestProperty from "../components/Cards/SingleTestProperty"
 import UserHome from "../pages/DashboardPages/UserDashboard/UserHome";
 import OnlyUserRoute from "./OnlyUserRoute";
 import OnlyAgentRoutes from "./OnlyAgentRoutes";
@@ -28,6 +29,7 @@ import ManageReviews from "../pages/DashboardPages/AdminDashBoard/ManageReviews"
 import UpdatePropertyForm from "../components/Forms/UpdatePropertyForm";
 import Career from "../pages/UserPages/Career";
 import AboutUs from "../pages/UserPages/AboutUs";
+import LMSDashboard from "../pages/DashboardPages/AdminDashBoard/LMS-Creator/LMSDashboard.jsx"
 
 import LearningModules from "../pages/DashboardPages/AgentDashboard/LMS/LearningDashboard";
 import ResultsPage from "../pages/DashboardPages/AgentDashboard/LMS/ResultsPage";
@@ -46,11 +48,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-properties",
-        element:<PrivateRoute><AllProperties /></PrivateRoute> ,
+        element:<AllProperties /> ,
       },
       {
         path: "/properties/:id",
         element:<PrivateRoute><PropertyDetails/></PrivateRoute> ,
+        loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
+      },
+      {
+        path: "/properties/test/:id",
+        element:<SingleTestProperty/>,
         loader: ({params})=> fetch(`https://api.wemofy.in/api/v1/properties/${params.id}`)
       },
       {
@@ -75,7 +82,7 @@ export const router = createBrowserRouter([
     path:'/dashboard',
     element: <PrivateRoute><DashboardLayout/></PrivateRoute>,
     children:[
-  // user routes
+      // user routes
       {
       
        path:"profile",
@@ -142,6 +149,11 @@ export const router = createBrowserRouter([
         element: <OnlyAgentRoutes><MeetingScheduled></MeetingScheduled></OnlyAgentRoutes>
       },
 //admin routes
+      {
+        path: 'lms-dashboard',
+        element: <OnlyAdminRoutes><LMSDashboard/></OnlyAdminRoutes>
+      },
+
       {
         path: 'manage-properties',
         element: <OnlyAdminRoutes><ManageProperties/></OnlyAdminRoutes>

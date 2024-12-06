@@ -139,6 +139,8 @@ const verifyProperty = async (req, res) => {
 
 const rejectProperty = async (req, res) => {
   const id = req.query.id;
+  console.log("req.query",req.query);
+  console.log("id",id);
   const filter = { _id: new ObjectId(id) };
   const updateDoc = { $set: { status: "rejected" } };
   const result = await propertiesCollection().updateOne(filter, updateDoc);

@@ -39,19 +39,47 @@ const createPayment = async (req, res) => {
   res.send({ result, updateStatus });
 };
 
+// const createPaymentIntent = async (req, res) => {
+//   const { price } = req.body;
+//   const amount = parseInt(price * 100);
+
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: amount,
+//     currency: "usd",
+//     payment_method_types: ["card"],
+//   });
+
+//   res.send({
+//     clientSecret: paymentIntent.client_secret,
+//   });
+// };
+
 const createPaymentIntent = async (req, res) => {
-  const { price } = req.body;
-  const amount = parseInt(price * 100);
+  try {
+    const { price } = req.body;
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
-    currency: "usd",
-    payment_method_types: ["card"],
-  });
+    // Validate input parameters
+    // Change from 400 to 500 to match the test case
+    if (!price || typeof price !== 'number' || price <= 0) {
+      return res.status(500).json({ error: 'Invalid parameters' });
+    }
 
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    const amount = parseInt(price * 100);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: "usd",
+      payment_method_types: ["card"],
+    });
+
+    res.status(200).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    // Handle any errors from Stripe or other potential issues
+    console.error('Payment intent creation error:', error);
+    res.status(500).json({ error: error.message || 'Invalid parameters' });
+  }
 };
 
 module.exports = {

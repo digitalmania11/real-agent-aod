@@ -70,7 +70,7 @@ const MiniCard = ({ property }) => {
               {status}
             </p>
 
-            <Link to={`/properties/${_id}`}>
+            <Link to={`/properties/test/${_id}`}>
               <button className="btn btn-primary btn-sm lg:px-10 text-white ">
                 Details
               </button>

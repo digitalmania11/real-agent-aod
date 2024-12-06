@@ -91,4 +91,3 @@ const ScheduleMeeting = ({ role, loading, meeting, openModal }) => {
 };
 
 export default ScheduleMeeting;
-

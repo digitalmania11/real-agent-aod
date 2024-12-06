@@ -13,6 +13,7 @@ import { FaMapMarkerAlt, FaMapSigns, FaCouch, FaHome, FaKey, FaEnvelope, FaUser,
 import { FaPlus } from 'react-icons/fa'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Check } from 'lucide-react'
+import { X } from 'lucide-react'
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import e from "cors";
@@ -47,6 +48,7 @@ const AddProperty = () => {
   const [isFurnishingDropdownOpen, setIsFurnishingDropdownOpen] = useState(false)
   const [selectedFurnishingOption, setSelectedFurnishingOption] = useState(null)
   const [isFurnishingDropdownLoading, setIsFurnishingDropdownLoading] = useState(false)
+  const [canSubmit, setcanSubmit] = useState(true);
   const furnishingDropdownRef = useRef(null)
   const dropdownContainerRef = useRef(null);
   const dropdownContainerRefF = useRef(null);
@@ -101,6 +103,22 @@ const AddProperty = () => {
       setIsDropdownOpenF(false)
     }
   }
+
+  const handleButtonClick = (e) => {
+    // Prevent form submission if videos are still uploading
+    if (!canSubmit) {
+      e.preventDefault(); // Prevent default form submission
+      Swal.fire({
+        icon: 'info',
+        title: 'Video upload in progress!',
+        text: 'Please wait until all videos are uploaded before submitting.',
+        timer: 3000, // Close after 3 seconds
+        showConfirmButton: false,
+      });
+    } else {
+      onSubmit(); // Call your function to handle the submit logic when the button is enabled
+    }
+  };
   
   const handleOwnershipSelect = (option) => {
     setSelectedOwnership(option)
@@ -314,90 +332,167 @@ const handleYouTubeBlur = () => {
   };
   
   
-
   const handleVideoChange = async (e) => {
-    const file = e.target.files[0]; // Single video file
-
-    console.log(file);
-
-    if (file) {
-      // Generate a local video preview
-      const videoPreview = URL.createObjectURL(file);
-      setVideoPreviews((prevPreviews) => [...prevPreviews, videoPreview]);
-
-      // Prepare data for Cloudinary upload
-      const formData = new FormData();
-      formData.append("VideoPitch", file); // Attach the file
-      formData.append("upload_preset", "akshay_waghmare");
-      formData.append("cloud_name", cloud_name); // Replace with your Cloudinary cloud name
-
-      try {
-        const res = await axios.post('https://api.wemofy.in/api/v1/properties/video', formData, {
+    const files = e.target.files;
+    console.log(files);
+  
+    if (files.length > 0) {
+      setcanSubmit(false);
+  
+      const uploadPromises = [];
+  
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+  
+        const formData = new FormData();
+        formData.append("VideoPitch", file);
+        formData.append("upload_preset", "akshay_waghmare");
+        formData.append("cloud_name", cloud_name);
+  
+        const uploadPromise = axios.post('http://localhost:3000/api/v1/properties/video', formData, {
           onUploadProgress: (progressEvent) => {
             const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percentage); // Update upload progress
+            setUploadProgress(percentage);
           },
-        });
-
-        // const resData = await res.json();
-        // console.log("resData",resData);
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              const videoUrl = res.data.videoUrl; // Extract the uploaded video URL
+              console.log(videoUrl);
+              setVideoLinks((prevLinks) => [...prevLinks, videoUrl]); // Update the video links state
+              const videoPreview = URL.createObjectURL(file);
+              setVideoPreviews((prevPreviews) => [...prevPreviews, videoPreview]);
+            }
+          })
+          .catch((error) => {
+            console.error("Video upload failed:", error);
+          });
   
-        if (res.status === 200) {
-          const videoUrl = res.data.videoUrl; // Extract the uploaded video URL
-          console.log(videoUrl);
-          setVideoLinks((prevLinks) => [...prevLinks, videoUrl]);  // Update state
-        }
-
-      } catch (error) {
-        console.error("Video upload failed:", error);
-      } finally {
-        setUploadProgress(0); // Reset progress after upload
+        uploadPromises.push(uploadPromise);
       }
+
+      Promise.all(uploadPromises)
+        .then(() => {
+          console.log("All uploads completed.");
+          setcanSubmit(true);
+        })
+        .catch((error) => {
+          console.error("One or more uploads failed:", error);
+          setcanSubmit(true);
+        })
+        .finally(() => {
+          setUploadProgress(0);
+        });
     }
   };
+  
+
+  // const handleVideoChange = async (e) => {
+  //   const file = e.target.files[0]; // Single video file
+
+  //   console.log(file);
+
+  //   if (file) {
+  //     // Generate a local video preview
+      
+
+  //     // Prepare data for Cloudinary upload
+  //     const formData = new FormData();
+  //     formData.append("VideoPitch", file); // Attach the file
+  //     formData.append("upload_preset", "akshay_waghmare");
+  //     formData.append("cloud_name", cloud_name); // Replace with your Cloudinary cloud name
+
+  //     try {
+  //       const res = await axios.post('http://localhost:3000/api/v1/properties/video', formData, {
+  //         onUploadProgress: (progressEvent) => {
+  //           const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+  //           setUploadProgress(percentage); // Update upload progress
+  //         },
+  //       });
+
+  //       const videoPreview = URL.createObjectURL(file);
+  //       setVideoPreviews((prevPreviews) => [...prevPreviews, videoPreview]);
+
+  //       // const resData = await res.json();
+  //       // console.log("resData",resData);
+  
+  //       if (res.status === 200) {
+  //         const videoUrl = res.data.videoUrl; // Extract the uploaded video URL
+  //         console.log(videoUrl);
+  //         setVideoLinks((prevLinks) => [...prevLinks, videoUrl]);  // Update state
+  //       }
+
+  //     } catch (error) {
+  //       console.error("Video upload failed:", error);
+  //     } finally {
+  //       setUploadProgress(0); // Reset progress after upload
+  //     }
+  //   }
+  // };
+  
 
 
   const removeVideo = (index) => {
     setVideoPreviews((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+    setVideoLinks((prevPreviews) => prevPreviews.filter((_, i) => i !== index));
+    Swal.fire({
+      icon: "success",
+      color: "white",
+      title: "Video Deleted",
+      text: "Video Deleted Successfully!",
+      showConfirmButton: false,
+      timer: 4000,
+      background: "#18b47b",
+    });
   };
 
   const handleImageChange = async (e) => {
-    const file = e.target.files[0]; // Get the single uploaded file
-
-    if (file) {
-      // Generate a local preview of the image
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreviews((prevPreviews) => [...prevPreviews, reader.result]);
-      };
-      reader.readAsDataURL(file);
-
-      // Upload the image
-      const imageFile = new FormData();
-      imageFile.append("image", file); // Append the file to FormData
-
-      try {
-        // Replace 'axiosPublic' and 'image_hosting_api' with your actual axios instance and API URL
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        });
-
-        if (res.data.success) {
-          const uploadedImageUrl = res.data.data.display_url; // Extract the uploaded URL
-          setImageLinks((prevLinks) => [...prevLinks, uploadedImageUrl]); // Update state with the new link
-        } else {
-          throw new Error("Image upload failed");
+    const files = e.target.files;
+  
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreviews((prevPreviews) => [...prevPreviews, reader.result]);
+        };
+        reader.readAsDataURL(file);
+        const imageFile = new FormData();
+        imageFile.append("image", file);
+  
+        try {
+          const res = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          });
+  
+          if (res.data.success) {
+            const uploadedImageUrl = res.data.data.display_url; 
+            setImageLinks((prevLinks) => [...prevLinks, uploadedImageUrl]);
+          } else {
+            throw new Error("Image upload failed");
+          }
+        } catch (error) {
+          console.error("Image upload error:", error);
         }
-      } catch (error) {
-        console.error("Image upload error:", error);
       }
     }
   };
+  
 
   const removeImage = (index) => {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImageLinks((prev) => prev.filter((_, i) => i !== index));
+    Swal.fire({
+      icon: "success",
+      color: "white",
+      title: "Image Deleted",
+      text: "Image Deleted Successfully!",
+      showConfirmButton: false,
+      timer: 4000,
+      background: "#18b47b",
+    });
   };
 
   const onSubmit = async (data) => {
@@ -512,7 +607,7 @@ const handleYouTubeBlur = () => {
               type="file"
               multiple
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={handleImageChange}  
               onFocus={handleImageFocus}
               onBlur={handleImageBlur}
               className={`block px-4 py-3 text-gray-700 text-sm rounded-md shadow-sm border-0 bg-white resize-none transition-all duration-300 ease-in-out
@@ -542,50 +637,62 @@ const handleYouTubeBlur = () => {
               </ul>
             </div>
           )}
-        {imagePreviews.length > 0 && (
-          <div className="mt-4 gap-2 flex flex-row">
-            {imagePreviews.map((preview, index) => (
-              <div key={index} className="relative">
+        {imagePreviews.length > 0 ? (
+        <div className="py-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {imagePreviews.map((preview, index) => (
+            <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg">
+              <img
+                src={preview}
+                alt={`Property Preview ${index + 1}`}
+                className="w-full h-48 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <button
+                  className="p-2 bg-white bg-opacity-80 rounded-full mr-2 hover:bg-opacity-100 transition duration-300"
                   onClick={() => setModalImage(preview)}
-                  className="focus:outline-none"
                 >
-                  <img
-                    src={preview}
-                    alt={`Property Preview ${index + 1}`}
-                    className="w-48 h-32 object-cover rounded-md cursor-pointer"
-                  />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
                 </button>
                 <button
+                  className="p-2 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition duration-300"
                   onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1 focus:outline-none"
                 >
-                  ✕
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Modal for full-screen preview */}
-        {modalImage && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-            <div className="relative">
-              <button
-                onClick={() => setModalImage(null)}
-                className="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2 focus:outline-none"
-              >
-                ✕
-              </button>
-              <img
-                src={modalImage}
-                alt="Full Property Preview"
-                className="max-w-full max-h-screen rounded-md"
-              />
             </div>
-          </div>
-        )}
+          ))}
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 mt-8">
+          <p className="text-xl font-semibold">No image previews available</p>
+          <p className="mt-2">Upload some images to see previews here.</p>
+        </div>
+      )}
 
+      {modalImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <div className="relative max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <img
+              src={modalImage}
+              alt="Full Property Preview"
+              className="w-full h-full object-contain rounded-lg"
+            />
+            <button
+              className="absolute top-4 right-4 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition duration-300"
+              onClick={() => setModalImage(null)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 </div>
 
       {/* Video Section */}
@@ -599,7 +706,11 @@ const handleYouTubeBlur = () => {
         <FaVideo className="inline text-xl mr-2 text-blue-500" />
         Property Videos
       </label>
-
+      <div className="max-w-md p-2 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 my-2">
+        <p className="text-sm">
+          The maximum allowed video size is <span className="font-semibold">10 MB</span>.
+        </p>
+      </div>
         <input
           id="video"
           type="file"
@@ -651,7 +762,7 @@ const handleYouTubeBlur = () => {
               id="youtube"
               type="url"
               placeholder="Enter YouTube video URL"
-              {...register('Youtube', { required: true })}
+              {...register('Youtube', { required: false })}
              //  value={youtubeUrl} // Make sure to track the YouTube URL value
               onFocus={handleYouTubeFocus}
               onBlur={handleYouTubeBlur}
@@ -687,33 +798,60 @@ const handleYouTubeBlur = () => {
             ></progress>
           </div>
         )}
-        {videoPreviews.length > 0 && (
-          <div className="mt-4 grid grid-cols-2 gap-6">
-            {videoPreviews.map((preview, index) => (
-              <div key={index} className="relative">
+        {videoPreviews.length > 0 ? (
+        <div className="py-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {videoPreviews.map((preview, index) => (
+            <div key={index} className="relative group overflow-hidden rounded-lg shadow-lg bg-gray-900">
+              <video
+                src={preview}
+                className="w-full h-48 object-cover transition duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <button
+                  className="p-2 bg-white bg-opacity-80 rounded-full mr-2 hover:bg-opacity-100 transition duration-300"
                   onClick={() => setModalVideo(preview)}
-                  className="focus:outline-none"
                 >
-                  <video
-                    src={preview}
-                    controls
-                    className="w-48 h-32 object-cover rounded-md cursor-pointer"
-                  />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
                 </button>
                 <button
+                  className="p-2 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100 transition duration-300"
                   onClick={() => removeVideo(index)}
-                  className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1 focus:outline-none"
                 >
-                  ✕
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 mt-8">
+          <p className="text-xl font-semibold">No video previews available</p>
+          <p className="mt-2">Upload some videos to see previews here.</p>
+        </div>
+      )}
+
+      {modalVideo && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-4 max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="relative aspect-video">
+              <video src={modalVideo} controls className="w-full h-full rounded-lg" />
+            </div>
+            <button
+              className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-300"
+              onClick={() => setModalVideo(null)}
+            >
+              Close
+            </button>
           </div>
-        )}
+        </div>
+      )}
 
         {/* Modal for full-screen video preview */}
-        {modalVideo && (
+        {/* {modalVideo && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
             <div className="relative">
               <button
@@ -729,7 +867,7 @@ const handleYouTubeBlur = () => {
               />
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
       {youtubeUrl && (
@@ -1437,13 +1575,12 @@ const handleYouTubeBlur = () => {
 
                 <button
                   type="submit"
-                  // onClick={(e) => {
-                  //   e.preventDefault(); // Prevent default form submission
-                  //   onSubmit(); // Call your function to handle the button click
-                  // }}
-                  className="inline-block shrink-0 rounded-md border border-secondary bg-secondary px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-secondary focus:outline-none focus:ring active:text-secondary"
+                  onClick={handleButtonClick}
+                  className={`inline-block shrink-0 rounded-md border border-secondary bg-secondary px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-secondary focus:outline-none focus:ring active:text-secondary ${!canSubmit ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!canSubmit} // Disable the button when canSubmit is false
                 >
-                  <BsBuildingAdd className="inline text-lg mr-2" /> Add Property
+                  <BsBuildingAdd className="inline text-lg mr-2" />
+                  Add Property
                 </button>
               </div>
             </form>

@@ -2,6 +2,8 @@ import React from 'react';
 
 const MapEmbed = ({url}) => {
   const iframeHTML = url;
+  console.log(url);
+  
 
 // Function to extract the `src` from the iframe string
 const extractSrc = (htmlString) => {
@@ -25,7 +27,7 @@ const iframeSrc = extractSrc(iframeHTML);
   return (
     <div style={{ width: '100%', height: '500px', border: '1px solid #ccc', borderRadius:'10px' }}>
       <iframe
-        src={iframeSrc}
+        src={mapSrc}
         width="100%"
         height="100%"
         style={{ border: 0 }}
