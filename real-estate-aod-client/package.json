@@ -11,11 +11,22 @@
     "lint:css": "stylelint '**/*.css' '**/*.scss' '**/*.sass'"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.1",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-progress": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.1",
+    "@radix-ui/react-tabs": "^1.1.1",
+    "@shadcn/ui": "^0.0.4",
     "@smastrom/react-rating": "^1.5.0",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
     "@tanstack/react-query": "^5.8.7",
     "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "firebase": "^10.6.0",
     "framer-motion": "^10.18.0",
@@ -40,9 +51,12 @@
     "real-estate-aod-client": "file:",
     "sort-by": "^0.0.2",
     "sweetalert2": "^11.6.13",
-    "swiper": "^11.1.15"
+    "swiper": "^11.1.15",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/node": "^22.10.1",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",

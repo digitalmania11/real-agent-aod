@@ -26,6 +26,8 @@ const DashboardLayout = () => {
   const [role, isLoading] = useRole(user?.email);
   const [sidebarOpen, setSidebarOpen] = useState(true); // Sidebar state
 
+  console.log(role);
+
   let headerText = "";
   let headerText2 = "DASHBOARD";
   if (!isLoading) {
@@ -277,8 +279,22 @@ const DashboardLayout = () => {
         <MdRateReview className="inline text-xl mr-3" />
         Manage reviews
       </NavLink>
+      <NavLink
+        to="/dashboard/lms-dashboard"
+        className={({ isActive, isPending }) =>
+          isPending
+            ? "pending"
+            : isActive
+            ? " active bg-base-100  px-3 py-2 text-neutral rounded-full font-semibold"
+            : "hover:bg-base-100 px-3 py-2 hover:text-neutral transition duration-200 rounded-full "
+        }
+      >
+        <MdRateReview className="inline text-xl mr-3" />
+        Create Modules
+      </NavLink>
     </>
   );
+
   return (
     <div className="min-h-screen bg-blue-50 relative">
       {loading ? (
