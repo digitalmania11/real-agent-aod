@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const { getReviews, createReview, deleteReview } = require('./path/to/reviews.controller');
+const { getReviews, createReview, deleteReview } = require('../controllers/review.controller.js');
 
 // Mock MongoDB dependencies
 jest.mock('../config/database', () => ({

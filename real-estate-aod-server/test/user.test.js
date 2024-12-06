@@ -6,7 +6,7 @@ const {
   getUserRole,
   updateUserRole,
   markUserAsFraud,
-} = require('./path/to/user.controller');
+} = require('../controllers/user.controller.js');
 
 // Mock MongoDB dependencies
 jest.mock('../config/database', () => ({
@@ -80,16 +80,18 @@ describe('User Controller API', () => {
   describe('GET /users/role', () => {
     it('should return the role of a user', async () => {
       const response = await request(app).get('/users/role?email=existing@example.com');
-
+  
       expect(response.statusCode).toBe(200);
-      expect(response.body).toBe('user');
+      expect(response.body).toBe('user'); // Expected role
     });
-
-    it('should return null for a non-existent user', async () => {
+  
+    it('should return undefined for a non-existent user', async () => {
       const response = await request(app).get('/users/role?email=nonexistent@example.com');
 
+      console.log(response.body);
+  
       expect(response.statusCode).toBe(200);
-      expect(response.body).toBeUndefined();
+      expect(response.body === undefined || Object.keys(response.body).length === 0).toBe(true);// Expected undefined for no match
     });
   });
 

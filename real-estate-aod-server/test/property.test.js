@@ -10,7 +10,7 @@ const {
   verifyProperty,
   rejectProperty,
   VideoUpload,
-} = require('./path/to/property.controller');
+} = require('../controllers/property.controller.js');
 
 jest.mock('../config/database', () => ({
   getDB: jest.fn(() => ({

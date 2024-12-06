@@ -5,7 +5,7 @@ const {
   getWishlistById,
   createWishlist,
   deleteWishlist,
-} = require('./path/to/wishlists.controller');
+} = require("../controllers/wishlist.controller.js");
 
 // Mock MongoDB dependencies
 jest.mock('../config/database', () => ({
@@ -47,8 +47,8 @@ describe('Wishlists Controller API', () => {
 
   describe('GET /wishlists/:id', () => {
     it('should return a wishlist by ID', async () => {
-      const response = await request(app).get('/wishlists/mockWishlistId');
-
+      const validObjectId = "64a8f2d64e95b8521c234567"; // Example valid ObjectId
+      const response = await request(app).get(`/wishlists/${validObjectId}`);
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         wishlistId: 'mockWishlistId',
@@ -69,8 +69,8 @@ describe('Wishlists Controller API', () => {
 
   describe('DELETE /wishlists/:id', () => {
     it('should delete a wishlist by ID', async () => {
-      const response = await request(app).delete('/wishlists/mockWishlistId');
-
+      const validObjectId = "64a8f2d64e95b8521c234567"; // Replace with a valid ObjectId
+      const response = await request(app).delete(`/wishlists/${validObjectId}`);
       expect(response.statusCode).toBe(200);
       expect(response.body.deletedCount).toBe(1);
     });

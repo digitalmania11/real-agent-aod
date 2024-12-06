@@ -4,13 +4,18 @@ const express = require('express');
 const app = express();
 const { getDB } = require('../config/database');
 
+const mockOffers = [{ propertyID: '123', agentEmail: 'agent@example.com' }];
+
 // Mock MongoDB database methods
 jest.mock('../config/database', () => ({
   getDB: jest.fn(() => ({
     collection: jest.fn(() => ({
-      find: jest.fn(() => ({
-        toArray: jest.fn(),
-      })),
+      // find: jest.fn(() => ({
+      //   toArray: jest.fn().mockResolvedValue(mockOffers), // Mock returns mockOffers
+      // })),
+      find: jest.fn().mockReturnValue({
+        toArray: jest.fn().mockResolvedValue(mockOffers), // mock the toArray method to return your mock data
+      }),
       findOne: jest.fn(),
       insertOne: jest.fn(),
       updateOne: jest.fn(),
@@ -34,17 +39,41 @@ describe('Offers Controller Tests', () => {
   });
 
   // Test GET /offers
-  it('should return offers based on query parameters', async () => {
-    // Mock database response
-    const mockOffers = [{ propertyID: '123', agentEmail: 'agent@example.com' }];
-    getDB().collection().find().toArray.mockResolvedValue(mockOffers);
+  // it('should return offers based on query parameters', async () => {
+  //   // Mock database response
+    
+  //   getDB().collection().find().toArray.mockResolvedValue(mockOffers);
 
-    const response = await request(app).get('/offers').query({ id: '123' });
+  //   const response = await request(app).get('/offers').query({ id: '123' });
 
+  //   expect(response.status).toBe(200);
+  //   expect(response.body).toEqual(mockOffers);
+  //   expect(getDB().collection().find().toArray).toHaveBeenCalledTimes(1);
+  // });
+
+  test('GET /offers filters offers by agentEmail', async () => {
+  
+    // Mock the database find method
+    getDB().collection().find.mockReturnValue({
+      toArray: jest.fn().mockResolvedValue(mockOffers),
+    });
+  
+    // Send a request with the agentEmail query parameter
+    const response = await request(app)
+      .get('/offers')
+      .query({ agentEmail: 'agent@example.com' });
+  
+    // Check the response
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockOffers);
-    expect(getDB().collection().find().toArray).toHaveBeenCalledTimes(1);
+    expect(response.body).toEqual(mockOffers); // Check if the response matches mockOffers
+  
+    // Ensure the find method was called with the correct query
+    expect(getDB().collection().find).toHaveBeenCalledWith({
+      agentEmail: 'agent@example.com',
+    });
   });
+  
+  
 
   // Test GET /offers/:id
   it('should return an offer by its ID', async () => {

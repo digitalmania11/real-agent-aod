@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const { getPayments, createPayment, createPaymentIntent } = require('./path/to/your/module');
+const { getPayments, createPayment, createPaymentIntent } = require('../controllers/payment.controller.js');
 
 // Mock MongoDB and Stripe dependencies
 jest.mock('../config/database', () => ({
@@ -26,6 +26,20 @@ jest.mock('stripe', () => jest.fn(() => ({
     }),
   },
 })));
+
+// jest.mock('stripe', () => jest.fn(() => ({
+//   paymentIntents: {
+//     create: jest.fn(({ amount, currency, payment_method_types }) => {
+//       // Check for valid parameters
+//       if (amount && currency === 'usd' && payment_method_types.includes('card')) {
+//         return Promise.resolve({ client_secret: 'mockClientSecret' });
+//       } else {
+//         // Reject if parameters are not valid
+//         return Promise.reject(new Error('Invalid parameters'));
+//       }
+//     }),
+//   },
+// })));
 
 const app = express();
 app.use(express.json());
