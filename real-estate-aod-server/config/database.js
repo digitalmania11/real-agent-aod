@@ -2,7 +2,8 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 require("dotenv").config();
 
 
-const uri = "mongodb+srv://sanjay:SG7RdDPE2UOrWmN9@cluster0.zysfx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// const uri = "mongodb+srv://sanjay:SG7RdDPE2UOrWmN9@cluster0.zysfx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb://localhost:27017"
 
 const client = new MongoClient(uri, {
   serverApi: {

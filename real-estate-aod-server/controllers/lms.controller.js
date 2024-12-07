@@ -25,14 +25,18 @@ exports.getTrainingMaterials = async (req, res) => {
 //   }
 
 exports.addTrainingMaterial = async (req, res) => {
-    try {
-      const result = await trainingMaterialsCollection().insertOne(req.body);
-      console.log(result);
-      res.status(201).json({ success: true, material: result.ops[0] });
-    } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
-    }
-  };
+  console.log("req.body", req.body);
+  try {
+    // Insert multiple modules if req.body.modules is an array
+    const result = await trainingMaterialsCollection().updateMany(req.body.modules);
+
+    console.log("Insertion result:", result);
+    res.status(201).json({ success: true, materials: result.insertedIds });
+  } catch (error) {
+    console.error("Insertion error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
   
   // Get quizzes

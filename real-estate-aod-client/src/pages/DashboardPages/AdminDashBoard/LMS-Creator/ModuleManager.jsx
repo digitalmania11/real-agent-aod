@@ -13,7 +13,7 @@ import axios from 'axios'
 
 export function ModuleManager() {
   const [modules, setModules] = useState([
-    { id: 1, title: '', submodules: ['Overview', 'Getting Started'], resources: [] },
+    { id: 1, title: '', submodules: ['', ''], resources: [] },
   ])
   const cloud_name = import.meta.env.CLOUDINARY_CLOUD_NAME;
   const formRef = useRef(null)
@@ -88,14 +88,14 @@ const handleFileUpload = async (moduleId, event, type) => {
         console.log(`${pair[0]}:`, pair[1]);
       }
 
-      const response = axios.post('http://localhost:3000/api/v1/properties/video', formData, {
+      const response = await axios.post('http://localhost:3000/api/v1/properties/video', formData, {
         onUploadProgress: (progressEvent) => {
           const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setUploadProgress(percentage);
         },
       })
 
-      console.log('Upload successful:', response.data);
+      console.log('Upload successful:', response);
 
       // Update the module with the uploaded file data
       setModules(modules.map(module =>
@@ -105,9 +105,11 @@ const handleFileUpload = async (moduleId, event, type) => {
               resources: [
                 ...module.resources,
                 {
-                  type,
-                  value: file.name,
-                  preview: URL.createObjectURL(file), // Generate preview from local file
+                  type: 'video',
+                  value: response.data.videoUrl
+                  , // Store URL from backend response
+                  preview: response.data.videoUrl
+                  , // Use backend URL for preview
                 },
               ],
             }
@@ -122,30 +124,24 @@ const handleFileUpload = async (moduleId, event, type) => {
 };
 
 
-
-
-  
   // Modify this Handle Submit Function
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    console.log("Submitting modules:", modules);
+  
     try {
-      const response = await fetch('http://localhost:3000/api/v1/properties/video', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(modules),
-      })
-      if (response.ok) {
-        alert('Modules saved successfully!')
+      const response = await axios.put('http://localhost:3000/api/v1/training-materials', { modules });
+  
+      if (response.status === 201) {
+        alert('Modules saved successfully!');
       } else {
-        throw new Error('Failed to save modules')
+        throw new Error(`Failed to save modules. Status: ${response.status}`);
       }
     } catch (error) {
-      console.error('Error saving modules:', error)
-      alert('Failed to save modules. Please try again.')
+      console.error('Error saving modules:', error);
+      alert('Failed to save modules. Please try again.');
     }
-  }
+  };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit}>

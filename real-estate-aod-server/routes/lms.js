@@ -22,7 +22,7 @@ router.get('/training-materials', getTrainingMaterials);
  * @desc    Add a new training material
  * @access  Super Admin
  */
-router.post('/training-materials', addTrainingMaterial);
+router.put('/training-materials', addTrainingMaterial);
 
 // router.post("/properties/video",upload,handleUpload,VideoUpload);
 router.post('/module/pdf-upload',upload,handleUpload,PdfUpload);
