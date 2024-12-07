@@ -1,4 +1,5 @@
 const request = require('supertest');
+const { ObjectId } = require("mongodb");
 const express = require('express');
 const {
   createUser,
@@ -7,6 +8,8 @@ const {
   updateUserRole,
   markUserAsFraud,
 } = require('../controllers/user.controller.js');
+
+const mockDb = require("../config/database").getDB();
 
 // Mock MongoDB dependencies
 jest.mock('../config/database', () => ({
@@ -25,6 +28,7 @@ jest.mock('../config/database', () => ({
       })),
       insertOne: jest.fn().mockResolvedValue({ insertedId: 'mockInsertedId' }),
       updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+      updateMany: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
     })),
   })),
 }));
@@ -97,20 +101,39 @@ describe('User Controller API', () => {
 
   describe('PATCH /users/role', () => {
     it('should update the role of a user', async () => {
-      const response = await request(app).patch('/users/role?id=mockUserId&role=admin');
-
+      // Create a valid ObjectId for testing
+      const validObjectId = new ObjectId();
+      
+      // Mock the database to expect this specific ObjectId
+      jest.spyOn(mockDb.collection(), 'updateOne').mockResolvedValue({ modifiedCount: 1 });
+  
+      const response = await request(app)
+        .patch(`/users/role?id=${validObjectId.toString()}&role=admin`);
+  
       expect(response.statusCode).toBe(200);
       expect(response.body.modifiedCount).toBe(1);
     });
   });
-
   describe('PATCH /users/fraud', () => {
     it('should mark a user as fraud and update properties status', async () => {
-      const response = await request(app).patch('/users/fraud?id=mockUserId&email=fraud@example.com');
-
+      // Create a valid ObjectId for testing
+      const validObjectId = new ObjectId();
+      const testEmail = 'fraud@example.com';
+  
+      // Mock database to simulate expected behavior
+      const mockCollection = mockDb.collection();
+      jest.spyOn(mockCollection, 'updateOne').mockResolvedValue({ modifiedCount: 1 });
+      jest.spyOn(mockCollection, 'updateMany').mockResolvedValue({ modifiedCount: 1 });
+  
+      // Send request to the endpoint
+      const response = await request(app).patch(
+        `/users/fraud?id=${validObjectId.toString()}&email=${testEmail}`
+      );
+  
+      // Assertions
       expect(response.statusCode).toBe(200);
       expect(response.body.result.modifiedCount).toBe(1);
       expect(response.body.result2.modifiedCount).toBe(1);
     });
-  });
+});
 });

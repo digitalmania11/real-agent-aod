@@ -1,8 +1,11 @@
 const request = require('supertest');
 const express = require('express');
 const { getReviews, createReview, deleteReview } = require('../controllers/review.controller.js');
+const { ObjectId } = require("mongodb");
 
 // Mock MongoDB dependencies
+const mockDb = require("../config/database").getDB();
+
 jest.mock('../config/database', () => ({
   getDB: jest.fn(() => ({
     collection: jest.fn(() => ({
@@ -58,8 +61,17 @@ describe('Reviews Controller API', () => {
 
   describe('DELETE /reviews/:id', () => {
     it('should delete a review by ID', async () => {
-      const response = await request(app).delete('/reviews/mockReviewId');
-
+      // Create a valid ObjectId for testing
+      const validObjectId = new ObjectId();
+  
+      // Mock database to simulate expected behavior
+      const mockCollection = mockDb.collection();
+      jest.spyOn(mockCollection, 'deleteOne').mockResolvedValue({ deletedCount: 1 });
+  
+      // Send request to the endpoint
+      const response = await request(app).delete(`/reviews/${validObjectId.toString()}`);
+  
+      // Assertions
       expect(response.statusCode).toBe(200);
       expect(response.body.deletedCount).toBe(1);
     });

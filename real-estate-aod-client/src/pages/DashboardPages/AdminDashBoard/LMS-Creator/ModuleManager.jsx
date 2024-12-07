@@ -13,8 +13,7 @@ import axios from 'axios'
 
 export function ModuleManager() {
   const [modules, setModules] = useState([
-    { id: 1, title: 'Introduction to LMS', submodules: ['Overview', 'Getting Started'], resources: [] },
-    { id: 2, title: 'Advanced Techniques', submodules: ['Data Analysis', 'Reporting'], resources: [] },
+    { id: 1, title: '', submodules: ['Overview', 'Getting Started'], resources: [] },
   ])
   const cloud_name = import.meta.env.CLOUDINARY_CLOUD_NAME;
   const formRef = useRef(null)
@@ -125,12 +124,12 @@ const handleFileUpload = async (moduleId, event, type) => {
 
 
 
-  // Modify This According to the PDF Upload
-
+  
+  // Modify this Handle Submit Function
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await fetch('/api/save-modules', {
+      const response = await fetch('http://localhost:3000/api/v1/properties/video', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

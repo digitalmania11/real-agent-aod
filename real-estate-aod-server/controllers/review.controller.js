@@ -45,8 +45,8 @@ const deleteReview = async (req, res) => {
       return res.status(404).send({ error: "Review not found" });
     }
 
-    // Send the result of the delete operation
-    res.send({ message: "Review successfully deleted", result });
+    // Send only the deletedCount
+    res.send({ deletedCount: result.deletedCount });
   } catch (error) {
     console.error('Error deleting review:', error);
     res.status(500).send({ error: "An error occurred while deleting the review" });

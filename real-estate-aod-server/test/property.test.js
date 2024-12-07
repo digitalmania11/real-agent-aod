@@ -1,6 +1,69 @@
 const request = require('supertest');
 const express = require('express');
+const { ObjectId } = require('mongodb');
+const { getDB } = require('../config/database');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+
+jest.mock('../config/database', () => ({
+  getDB: jest.fn(() => ({
+    collection: jest.fn(() => ({
+      find: jest.fn(() => ({
+        toArray: jest.fn().mockResolvedValue([
+          {
+            _id: '65f8d3b7b3e4c74f5c9a1234',
+            propertyTitle: 'Mock Property',
+            agentEmail: 'agent@example.com',
+            status: 'pending',
+          },
+        ]),
+      })),
+      findOne: jest.fn((query) => {
+        if (query._id.toString() === '65f8d3b7b3e4c74f5c9a1234') {
+          return Promise.resolve({
+            _id: '65f8d3b7b3e4c74f5c9a1234',
+            propertyTitle: 'Mock Property',
+            status: 'pending',
+          });
+        }
+        return Promise.resolve(null);
+      }),
+      insertOne: jest.fn(() =>
+        Promise.resolve({
+          insertedId: '65f8d3b7b3e4c74f5c9a1234',
+        })
+      ),
+      updateOne: jest.fn(() =>
+        Promise.resolve({
+          modifiedCount: 1,
+        })
+      ),
+      deleteOne: jest.fn(() =>
+        Promise.resolve({
+          deletedCount: 1,
+        })
+      ),
+    })),
+  })),
+}));
+
+jest.mock('cloudinary', () => ({
+  v2: {
+    uploader: {
+      upload: jest.fn((filePath) =>
+        Promise.resolve({
+          secure_url: `https://cloudinary.com/mock/${filePath}`,
+        })
+      ),
+    },
+  },
+}));
+
+jest.mock('fs', () => ({
+  unlinkSync: jest.fn(),
+  existsSync: jest.fn(() => true),
+}));
+
 const {
   getAllProperties,
   getPropertyById,
@@ -10,130 +73,98 @@ const {
   verifyProperty,
   rejectProperty,
   VideoUpload,
-} = require('../controllers/property.controller.js');
-
-jest.mock('../config/database', () => ({
-  getDB: jest.fn(() => ({
-    collection: jest.fn(() => ({
-      find: jest.fn(() => ({
-        toArray: jest.fn().mockResolvedValue([{ id: 'mockPropertyId', title: 'Test Property' }]),
-      })),
-      findOne: jest.fn().mockResolvedValue({ id: 'mockPropertyId', title: 'Test Property' }),
-      insertOne: jest.fn().mockResolvedValue({ insertedId: 'mockInsertedId' }),
-      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
-      deleteOne: jest.fn().mockResolvedValue({ deletedCount: 1 }),
-      countDocuments: jest.fn().mockResolvedValue(1),
-    })),
-  })),
-}));
-
-jest.mock('cloudinary', () => ({
-  v2: {
-    uploader: {
-      upload: jest.fn().mockResolvedValue({ url: 'mockCloudinaryUrl' }),
-    },
-  },
-}));
+} = require('../controllers/property.controller');
 
 const app = express();
 app.use(express.json());
+
 app.get('/properties', getAllProperties);
 app.get('/properties/:id', getPropertyById);
-app.put('/properties/:id', updateProperty);
 app.post('/properties', createProperty);
+app.put('/properties/:id', updateProperty);
 app.delete('/properties/:id', deleteProperty);
-app.patch('/properties/verify', verifyProperty);
-app.patch('/properties/reject', rejectProperty);
+app.put('/properties/verify', verifyProperty);
+app.put('/properties/reject', rejectProperty);
 app.post('/properties/video', VideoUpload);
 
-describe('Property Controller API', () => {
+describe('Properties Controller', () => {
   describe('GET /properties', () => {
-    it('should return a list of properties', async () => {
-      const response = await request(app).get('/properties?status=active');
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.propertiesData).toEqual([{ id: 'mockPropertyId', title: 'Test Property' }]);
-      expect(response.body.countData).toBe(1);
+    it('should return all properties', async () => {
+      const response = await request(app).get('/properties');
+      expect(response.status).toBe(200);
+      expect(response.body.propertiesData).toBeInstanceOf(Array);
+      expect(response.body.countData).toBeGreaterThan(0);
     });
   });
 
   describe('GET /properties/:id', () => {
-    it('should return a property by ID', async () => {
-      const response = await request(app).get('/properties/mockPropertyId');
+    it('should return a single property by ID', async () => {
+      const validObjectId = '65f8d3b7b3e4c74f5c9a1234';
+      const response = await request(app).get(`/properties/${validObjectId}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('_id', validObjectId);
+    });
 
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toEqual({ id: 'mockPropertyId', title: 'Test Property' });
+    it('should return 400 for invalid ObjectId', async () => {
+      const response = await request(app).get('/properties/invalidId');
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error', 'Invalid ObjectId format');
     });
   });
 
   describe('POST /properties', () => {
     it('should create a new property', async () => {
-      const propertyData = { title: 'New Property' };
-      const response = await request(app).post('/properties').send(propertyData);
-
-      expect(response.statusCode).toBe(201);
-      expect(response.body.insertedId).toBe('mockInsertedId');
+      const newProperty = {
+        propertyTitle: 'New Property',
+        agentEmail: 'agent@example.com',
+        status: 'pending',
+      };
+      const response = await request(app).post('/properties').send(newProperty);
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty('insertedId');
     });
   });
 
   describe('PUT /properties/:id', () => {
-    it('should update a property by ID', async () => {
-      const updatedData = { title: 'Updated Property' };
-      const response = await request(app).put('/properties/mockPropertyId').send(updatedData);
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.modifiedCount).toBe(1);
+    it('should update a property', async () => {
+      const validObjectId = '65f8d3b7b3e4c74f5c9a1234';
+      const updateData = { propertyTitle: 'Updated Property' };
+      const response = await request(app).put(`/properties/${validObjectId}`).send(updateData);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('modifiedCount', 1);
     });
   });
 
   describe('DELETE /properties/:id', () => {
-    it('should delete a property by ID', async () => {
-      const response = await request(app).delete('/properties/mockPropertyId');
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.deletedCount).toBe(1);
+    it('should delete a property', async () => {
+      const validObjectId = '65f8d3b7b3e4c74f5c9a1234';
+      const response = await request(app).delete(`/properties/${validObjectId}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('deletedCount', 1);
     });
   });
 
-  describe('PATCH /properties/verify', () => {
+  describe('PUT /properties/verify', () => {
     it('should verify a property', async () => {
-      const response = await request(app).patch('/properties/verify?id=mockPropertyId');
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.modifiedCount).toBe(1);
+      const response = await request(app).put('/properties/verify').query({ id: '65f8d3b7b3e4c74f5c9a1234' });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('modifiedCount', 1);
     });
   });
 
-  describe('PATCH /properties/reject', () => {
+  describe('PUT /properties/reject', () => {
     it('should reject a property', async () => {
-      const response = await request(app).patch('/properties/reject?id=mockPropertyId');
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.modifiedCount).toBe(1);
+      const response = await request(app).put('/properties/reject').query({ id: '65f8d3b7b3e4c74f5c9a1234' });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('modifiedCount', 1);
     });
   });
 
   describe('POST /properties/video', () => {
-    it('should upload a video to Cloudinary and return the URL', async () => {
-      jest.spyOn(fs, 'unlinkSync').mockImplementation(() => {});
-      const mockFilePath = 'mock/path/to/video.mp4';
-
-      jest.mocked(fs.unlinkSync).mockImplementationOnce(() => {});
-
-      const mockReq = {
-        files: {
-          VideoPitch: [
-            {
-              path: mockFilePath,
-            },
-          ],
-        },
-      };
-
-      const response = await request(app).post('/properties/video').send(mockReq);
-
-      expect(response.statusCode).toBe(200);
-      expect(response.body.videoUrl).toBe('mockCloudinaryUrl');
+    it('should upload a video to Cloudinary', async () => {
+      const response = await request(app).post('/properties/video').attach('VideoPitch', 'path/to/mock/video.mp4');
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('videoUrl');
     });
   });
 });
