@@ -12,6 +12,7 @@ const wishlistRoutes = require("./routes/wishlists");
 const offerRoutes = require("./routes/offers");
 const paymentRoutes = require("./routes/payments");
 const meetingRoutes = require("./routes/meeting");
+const lmsroutes = require("./routes/lms");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,6 +37,7 @@ app.use("/api/v1", wishlistRoutes);
 app.use("/api/v1", offerRoutes);
 app.use("/api/v1", paymentRoutes);
 app.use("/api/v1", meetingRoutes);
+app.use("/api/v1", lmsroutes);
 
 
 

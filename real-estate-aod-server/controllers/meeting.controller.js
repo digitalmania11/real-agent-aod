@@ -89,17 +89,58 @@ const getMeetingStatus = async (req, res) => {
   };
 
 // 4. Get Meetups by User (Buyer or Agent)
+// 4. Get Meetups by User (Buyer or Agent)
 const getMeetups = async (req, res) => {
-  const { email, role } = req.query; // role can be "buyer" or "agent"
+  const { email, role } = req.query;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
 
+  // Validate input
   if (!email || !["user", "agent"].includes(role)) {
     return res.status(400).send({ error: "Invalid request." });
   }
 
-  const query = role === "user" ? { buyerEmail: email } : { agentEmail: email };
-  const meetups = await meetupsCollection().find(query).toArray();
+  try {
+    // Construct query based on role
+    const query = role === "user" 
+      ? { 
+          buyerEmail: email, 
+          // Optional: Add status filter if needed
+          status: { $in: ['pending', 'confirmed'] }
+        } 
+      : { 
+          agentEmail: email,
+          // Optional: Add status filter if needed
+          status: { $in: ['pending', 'confirmed'] }
+        };
 
-  res.send({ success: true, data: meetups });
+    // Count total matching documents
+    const totalMeetups = await meetupsCollection().countDocuments(query);
+
+    // Find meetups with pagination
+    const meetups = await meetupsCollection()
+      .find(query)
+      .sort({ date: -1 }) // Sort by most recent first
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    res.send({
+      success: true,
+      data: meetups,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(totalMeetups / limit),
+        totalMeetups
+      }
+    });
+  } catch (error) {
+    res.status(500).send({ 
+      success: false, 
+      error: "An error occurred while fetching meetups" 
+    });
+  }
 };
 
 module.exports = {
